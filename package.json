@@ -1,0 +1,11 @@
+{
+  "name": "tmanager",
+  "version": "1.0.0",
+  "description": "Der Onlinemanager für Sportteams",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ZBW HK",
+  "license": "ISC"
+}
