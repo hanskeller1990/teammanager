@@ -13,12 +13,13 @@
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="js/jqm.page.params.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/user.js"></script>
     <script src="js/teams.js"></script>
     <script src="js/log.js"></script>
+    <script src="js/error.js"></script>
 </head>
 
 <body>
-
     <div data-role="page">
         <div data-role="header">
             <h1>TeamManager</h1>
@@ -45,6 +46,21 @@
             </ul>
         </div>
     </div>
+
+    <div data-role="page" id="login">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <h3>Sign In</h3>
+            <label for="txt-username">Benutzername</label>
+            <input type="text" name="txt-username" id="txt-username">
+            <label for="txt-password">Passwort</label>
+            <input type="password" name="txt-password" id="txt-password">
+            <button onclick="login()" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Anmelden</button>
+        </div>
+    </div>
+
 
     <div data-role="page" id="members">
         <div data-role="header">

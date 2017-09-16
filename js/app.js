@@ -1,9 +1,9 @@
 /**
  * Created by hk on 22.08.2017.
  */
-$(document).ready(function() {
-    receiveMembers();
-});
+// $(document).ready(function() {
+//     receiveMembers();
+// });
 
 function receiveMembers() {
     get('users', function(data) {
@@ -44,6 +44,10 @@ $(document).bind("pagebeforechange", function(event, data) {
 
 var basePath = 'https://zbw.lump.ch/api/v1';
 
+
+UserId = 133;
+
+
 function get(path, successFn) {
     call(path, null, successFn, 'GET');
 }
@@ -66,7 +70,8 @@ function call(path, postData, successFn, method) {
         data: postData,
         dataType: 'json',
         beforeSend: function(xhr) {
-            xhr.setRequestHeader('Authorization', 'Basic ' + btoa('livio.a@gmail.com' + ":" + 'test1234'));
+            // xhr.setRequestHeader('Authorization', 'Basic ' + btoa('livio.a@gmail.com' + ":" + 'test1234'));
+            xhr.setRequestHeader('Authorization', 'Basic ' + btoa(username + ":" + password));
         },
         success: successFn
     });

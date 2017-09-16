@@ -79,10 +79,6 @@ function listMembers(teamid) {
     }, this);
 };
 
-
-UserId = 133;
-
-
 function memberOf(members) {
     let memberId = 0;
     members.forEach(function(member) {
