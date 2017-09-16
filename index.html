@@ -10,14 +10,31 @@
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript">
+    
+    $(window).on("hashchange", function() {
+      console.log(window.location.hash);
+    });
+    </script>
 </head>
 <body>
+
+  <section id="members" src="pages/members.html" default></section>
+  <section id="contact-details" src="pages/contact-details.htm"></section>
+  <section id="about" src="pages/about.htm" default></section>
+
 
 <div data-role="page">
     <div data-role="header">
         <h1>Login</h1>
     </div>
     <div role="main" class="ui-content">
+        
+  <nav>
+        <a href="#members">Contacts</a>
+        <a href="#members-detail:0">About</a>
+      </nav>
+      
         <h2 class="mc-text-center">Willkommen</h2>
         <p class="mc-top-margin-1-5"><b>Bestehende Benutzer</b></p>
         <a href="sign-in.html" class="ui-btn ui-btn-b ui-corner-all">Anmelden</a>

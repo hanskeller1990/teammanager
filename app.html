@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <title>TeamManager</title>
@@ -10,56 +11,107 @@
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/jqm.page.params.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/teams.js"></script>
+    <script src="js/log.js"></script>
 </head>
+
 <body>
 
-<div data-role="page">
-    <div data-role="header">
-        <h1>TeamManager</h1>
-        <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+    <div data-role="page">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+        </div>
+        <div role="main" class="ui-content">
+            <h4>Team</h4>
+            <ul data-role="listview">
+                <li><a href="#">Teamübersicht</a></li>
+                <li><a href="#">Teammitglieder</a></li>
+                <li><a href="#">List item 3</a></li>
+            </ul>
+            <hr/>
+            <h4>Training</h4>
+            <ul data-role="listview">
+                <li><a href="#">Trainingsübersicht</a></li>
+                <li><a href="#">List item 2</a></li>
+            </ul>
+            <hr/>
+            <h4>Administration</h4>
+            <ul data-role="listview">
+                <li><a href="#">Benutzereinstellungen</a></li>
+                <li><a href="#">Abmelden</a></li>
+            </ul>
+        </div>
     </div>
-    <div role="main" class="ui-content">
-        <h4>Team</h4>
-        <ul data-role="listview">
-            <li><a href="#">Teamübersicht</a></li>
-            <li><a href="#">Teammitglieder</a></li>
-            <li><a href="#">List item 3</a></li>
-        </ul>
-        <hr/>
-        <h4>Training</h4>
-        <ul data-role="listview">
-            <li><a href="#">Trainingsübersicht</a></li>
-            <li><a href="#">List item 2</a></li>
-        </ul>
-        <hr/>
-        <h4>Administration</h4>
-        <ul data-role="listview">
-            <li><a href="#">Benutzereinstellungen</a></li>
-            <li><a href="#">Abmelden</a></li>
-        </ul>
-    </div>
-</div>
 
-<div data-role="page" id="members">
-    <div data-role="header">
-        <h1>TeamManager</h1>
-        <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+    <div data-role="page" id="members">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+        </div>
+        <div role="main" class="ui-content">
+            <ul id="memberlist"></ul>
+        </div>
     </div>
-    <div role="main" class="ui-content">
-        <ul id="memberlist"></ul>
-    </div>
-</div>
 
-<div data-role="page" id="members-detail">
-    <div data-role="header">
-        <h1>TeamManager</h1>
-        <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+    <div data-role="page" id="members-detail">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+        </div>
+        <div role="main" class="ui-content">
+            <p id="test"></p>
+        </div>
     </div>
-    <div role="main" class="ui-content">
-        <p id="test"></p>
+
+
+    <div data-role="page" id="teams">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+        </div>
+        <div role="main" class="ui-content">
+            <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                <thead>
+                    <tr class="ui-bar-d">
+                        <th>Name</th>
+                        <th>Website</th>
+                        <th>Beigetreten</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="teamList">
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+
+    <div data-role="page" id="team-members">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+        </div>
+        <div role="main" class="ui-content">
+            <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                <thead>
+                    <tr class="ui-bar-d">
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>Beigetreten</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="teamMembers">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 
 </body>
+
 </html>
