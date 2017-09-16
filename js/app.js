@@ -52,6 +52,10 @@ function post(path, data, successFn) {
     call(path, data, successFn, 'POST');
 }
 
+function del(path, successFn) {
+    call(path, null, successFn, 'DELETE');
+}
+
 function call(path, postData, successFn, method) {
     if (path.indexOf('/') != 0) {
         path = '/' + path

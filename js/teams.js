@@ -7,12 +7,13 @@ function listTeams() {
     get('teams', function(data) {
         debug(data);
         data.forEach(function(team) {
-            if (memberOf(team.Members)) {
+            memberId = memberOf(team.Members);
+            if (memberId > 0) {
                 var content =
                     '<tr>' +
                     '<td>' + team.Name + '</td>' +
                     '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>' +
-                    '<td>Ja<button onclick="austritt(' + team.TeamId + ')">Austreten</button></td>' +
+                    '<td>Ja<button onclick="austritt(' + memberId + ')">Austreten</button></td>' +
                     '<td><a href="#team-members?id=' + team.TeamId + '">Mitglieder</a></td>' +
                     '<td><a href="#team-edit?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a></td>' +
                     '</tr>';
@@ -36,8 +37,17 @@ function beitritt(teamid) {
     post('members', postData, listTeams());
 }
 
-function austritt(teamid) {
-    debug(teamid);
+function austritt(memberid) {
+    // debug(team);
+    // let memberid;
+    // team.Members.forEach(function(member) {
+    //     if (member.UserId == UserId) {
+    //         memberid = member.MemberId;
+    //         debug(memberid);
+    //         return;
+    //     }
+    // });
+    del('members/' + memberid, listTeams());
 }
 
 $(document).on('pagebeforeshow', '#team-members', function(e, data) {
@@ -74,11 +84,11 @@ UserId = 133;
 
 
 function memberOf(members) {
-    let memberOf = false;
+    let memberId = 0;
     members.forEach(function(member) {
         if (member.UserId == UserId) {
-            return memberOf = true;
+            return memberId = member.MemberId;
         }
     });
-    return memberOf;
+    return memberId;
 }
