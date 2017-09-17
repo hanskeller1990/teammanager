@@ -1,8 +1,8 @@
-$(document).on('pageshow', '#trainings', function() {
+$(document).on('pagebeforeshow', '#trainings', function() {
     listTrainings();
 });
 
-$(document).on('pageshow', '#own-teams-trainings', function() {
+$(document).on('pagebeforeshow', '#own-teams-trainings', function() {
     listOwnTeamsTrainings();
 });
 

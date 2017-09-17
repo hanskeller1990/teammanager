@@ -56,6 +56,10 @@ function post(path, data, successFn) {
     call(path, data, successFn, 'POST');
 }
 
+function put(path, data, successFn) {
+    call(path, data, successFn, 'PUT');
+}
+
 function del(path, successFn) {
     call(path, null, successFn, 'DELETE');
 }

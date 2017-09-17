@@ -14,10 +14,84 @@ $(document).bind("pagebeforechange", function(event, data) {
 });
 
 
+$(document).on('pagebeforeshow', '#settings', function() {
+    showUser();
+});
+
+
+function showUser() {
+    get('users/' + UserId, function(data) {
+        debug(data[0]);
+        if (data[0]) {
+            user = data[0];
+            $('#txt-settings-firstname').val(user.FirstName);
+            $('#txt-settings-lastname').val(user.LastName);
+            $('#txt-settings-mail').val(user.Email);
+        }
+    });
+}
+
+function change() {
+    firstname = $('#txt-settings-firstname').val();
+    lastname = $('#txt-settings-lastname').val();
+    mail = $('#txt-settings-mail').val();
+
+    if (firstname === '' || lastname === '' || mail === '') {
+        popup("settings-popup", "Fehlende Angaben", "Bitte füllen Sie alle Felder aus.", 2000);
+        return;
+    }
+
+    putData = '{' +
+        '"LastName": "' + lastname + '",' +
+        '"FirstName": "' + firstname + '",' +
+        '"Email": "' + mail + '"' +
+        '}';
+    put('users/' + UserId, putData, function(data) {
+        if (noError(data)) {
+            popup("settings-popup", "Erfolg", "Daten erfolgreich geändert", 2000);
+            localName = localStorage.getItem("username")
+            if (localName && localName !== mail) {
+                localStorage.setItem("username", mail);
+            }
+        } else {
+            popup("settings-popup", data.type, data.message, 2000);
+        }
+    });
+}
+
+function changePW() {
+    password = $('#txt-settings-password').val();
+    passwordConfirm = $('#txt-settings-password-confirm').val();
+
+    if (password === '' || passwordConfirm === '') {
+        popup("settings-popup", "Fehlende Angaben", "Bitte füllen Sie alle Felder aus.", 2000);
+        return;
+    }
+    if (password !== passwordConfirm) {
+        popup("settings-popup", "Fehler", "Die Beiden Passwörter stimmen nicht überein", 2000);
+        return;
+    }
+    putData = '{' +
+        '"Password": "' + password + '"' +
+        '}';
+    put('users/' + UserId, putData, function(data) {
+        if (noError(data)) {
+            popup("settings-popup", "Erfolg", "Passwort erfolgreich geändert", 2000);
+            localPW = localStorage.getItem("password")
+            if (localPW && localPW !== password) {
+                localStorage.setItem("password", password);
+            }
+        } else {
+            popup("settings-popup", data.type, data.message, 2000);
+        }
+    });
+}
+
+
 function login() {
-    username = $('#txt-username').val();
-    password = $('#txt-password').val();
-    saveCredentials = $('#chck-rememberme').is(':checked');
+    username = $('#txt-login-username').val();
+    password = $('#txt-login-password').val();
+    saveCredentials = $('#chck-login-rememberme').is(':checked');
     if (username === '' || password === '') {
         popup("login-popup", "Fehlende Angaben", "Bitte füllen Sie alle Felder aus.", 2000);
         return;
@@ -45,11 +119,11 @@ function login() {
 }
 
 function signup() {
-    firstname = $('#txt-firstname').val();
-    lastname = $('#txt-lastname').val();
-    mail = $('#txt-mail').val();
-    password = $('#txt-password-one').val();
-    passwordConfirm = $('#txt-password-confirm').val();
+    firstname = $('#txt-signup-firstname').val();
+    lastname = $('#txt-signup-lastname').val();
+    mail = $('#txt-signup-mail').val();
+    password = $('#txt-signup-password').val();
+    passwordConfirm = $('#txt-signup-password-confirm').val();
 
     if (firstname === '' || lastname === '' || mail === '' || password === '' || passwordConfirm === '') {
         popup("signup-popup", "Fehlende Angaben", "Bitte füllen Sie alle Felder aus.", 2000);

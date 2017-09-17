@@ -1,4 +1,4 @@
-$(document).on('pageshow', '#teams', function() {
+$(document).on('pagebeforeshow', '#teams', function() {
     listTeams();
 });
 
@@ -64,10 +64,10 @@ function listMembers(teamid) {
                             '</tr>';
                         $('tbody#teamMembers').append(content);
                     }
-                }, this);
+                });
             });
         }
-    }, this);
+    });
 };
 
 function memberIdOfUser(members) {
