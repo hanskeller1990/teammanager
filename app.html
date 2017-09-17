@@ -15,6 +15,7 @@
     <script src="js/app.js"></script>
     <script src="js/user.js"></script>
     <script src="js/teams.js"></script>
+    <script src="js/popup.js"></script>
     <script src="js/log.js"></script>
     <script src="js/error.js"></script>
 </head>
@@ -60,6 +61,35 @@
                 <label for="chck-rememberme">angemeldet bleiben (unsicher)</label>
             </fieldset>
             <button onclick="login()" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Anmelden</button>
+            <a href="#signup" class="ui-btn ui-btn-c ui-corner-all">Registrieren</a>
+            <div data-role="popup" id="login-popup" data-position-to="window" data-transition="turn">
+                <h4 id="login-popup-title"></h4>
+                <p id="login-popup-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="signup">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <h3>Sign Up</h3>
+            <label for="txt-firstname">Vorname</label>
+            <input type="text" name="txt-firstname" id="txt-firstname">
+            <label for="txt-lastname">Name</label>
+            <input type="text" name="txt-lastname" id="txt-lastname">
+            <label for="txt-mail">Mail</label>
+            <input type="text" name="txt-mail" id="txt-mail">
+            <label for="txt-password-one">Passwort</label>
+            <input type="password" name="txt-password" id="txt-password-one">
+            <label for="txt-password-confirm">Passwort wiederholen</label>
+            <input type="password" name="txt-password-confirm" id="txt-password-confirm">
+            <button onclick="signup()" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Registrieren</button>
+            <div data-role="popup" id="signup-popup" data-position-to="window" data-transition="turn">
+                <h4 id="signup-popup-title"></h4>
+                <p id="signup-popup-text"></p>
+            </div>
         </div>
     </div>
 

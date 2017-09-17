@@ -1,3 +1,9 @@
 function noError(data) {
-    return (!data.type && !data.message);
+    if (data.type) {
+        if (data.type === 'Info') {
+            return true;
+        }
+        return false;
+    }
+    return true;
 }
