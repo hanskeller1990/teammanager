@@ -25,22 +25,22 @@ function login() {
     // get('users?Email=' + username + ')', function(data) {
     get('users', function(data) {
         debug(data);
-        if (noError(data)) {
-            data.forEach(function(user) {
-                if (user.Email === username) {
-                    userId = user.UserId;
-                    if (saveCredentials) {
-                        localStorage.setItem('username', username);
-                        localStorage.setItem('password', password);
-                        localStorage.setItem('userId', userId);
-                    }
-                    window.location.hash = '';
-                    return
-                }
-            });
+        if (!noError(data)) {
+            popup("login-popup", data.type, data.message, 2000);
+            return;
         }
-        popup("login-popup", data.type, data.message, 2000);
-        return;
+        data.forEach(function(user) {
+            if (user.Email === username) {
+                userId = user.UserId;
+                if (saveCredentials) {
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('password', password);
+                    localStorage.setItem('userId', userId);
+                }
+                window.location.hash = '';
+                return
+            }
+        });
     });
 }
 

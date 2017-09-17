@@ -7,7 +7,7 @@ function listTeams() {
     get('teams', function(data) {
         debug(data);
         data.forEach(function(team) {
-            memberId = memberOf(team.Members);
+            memberId = memberIdOfUser(team.Members);
             if (memberId > 0) {
                 var content =
                     '<tr>' +
@@ -38,15 +38,6 @@ function beitritt(teamid) {
 }
 
 function austritt(memberid) {
-    // debug(team);
-    // let memberid;
-    // team.Members.forEach(function(member) {
-    //     if (member.UserId == UserId) {
-    //         memberid = member.MemberId;
-    //         debug(memberid);
-    //         return;
-    //     }
-    // });
     del('members/' + memberid, listTeams());
 }
 
@@ -79,7 +70,7 @@ function listMembers(teamid) {
     }, this);
 };
 
-function memberOf(members) {
+function memberIdOfUser(members) {
     let memberId = 0;
     members.forEach(function(member) {
         if (member.UserId == UserId) {

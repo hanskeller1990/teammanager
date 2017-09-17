@@ -15,6 +15,7 @@
     <script src="js/app.js"></script>
     <script src="js/user.js"></script>
     <script src="js/teams.js"></script>
+    <script src="js/trainings.js"></script>
     <script src="js/popup.js"></script>
     <script src="js/log.js"></script>
     <script src="js/error.js"></script>
@@ -34,8 +35,8 @@
             <hr/>
             <h4>Training</h4>
             <ul data-role="listview">
-                <li><a href="#">Trainings eigene Teams</a></li>
-                <li><a href="#">Trainingsübersicht</a></li>
+                <li><a href="#own-teams-trainings">Trainings eigene Teams</a></li>
+                <li><a href="#trainings">Trainingsübersicht</a></li>
             </ul>
             <hr/>
             <h4>Administration</h4>
@@ -158,6 +159,49 @@
         </div>
     </div>
 
+    <div data-role="page" id="trainings">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+        </div>
+        <div role="main" class="ui-content">
+            <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                <thead>
+                    <tr class="ui-bar-d">
+                        <th>Title</th>
+                        <th>Team</th>
+                        <th>Datum</th>
+                        <th>Angemeldet</th>
+                        <th>Teilnehmer</th>
+                    </tr>
+                </thead>
+                <tbody id="trainingsList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div data-role="page" id="own-teams-trainings">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+        </div>
+        <div role="main" class="ui-content">
+            <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                <thead>
+                    <tr class="ui-bar-d">
+                        <th>Title</th>
+                        <th>Team</th>
+                        <th>Datum</th>
+                        <th>Angemeldet</th>
+                        <th>Teilnehmer</th>
+                    </tr>
+                </thead>
+                <tbody id="teamTrainingsList">
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
 </body>
