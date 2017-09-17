@@ -18,7 +18,7 @@ function receiveMembers() {
 function memberDetail(id) {
     // storeObject.id = id;
     //Change page
-    $.mobile.changePage("#members-detail?id=" + id);
+    $.mobile.changePage('#members-detail?id=' + id);
 }
 $(document).on('pagebeforeshow', '#members-detail', function(e, data) {
     if ($.mobile.pageData && $.mobile.pageData.id) {
@@ -36,7 +36,7 @@ function getMemberDetail() {
     });
 }
 
-$(document).bind("pagebeforechange", function(event, data) {
+$(document).bind('pagebeforechange', function(event, data) {
     $.mobile.pageData = (data && data.options && data.options.pageData) ?
         data.options.pageData :
         null;
@@ -74,8 +74,7 @@ function call(path, postData, successFn, method) {
         data: postData,
         dataType: 'json',
         beforeSend: function(xhr) {
-            // xhr.setRequestHeader('Authorization', 'Basic ' + btoa('livio.a@gmail.com' + ":" + 'test1234'));
-            xhr.setRequestHeader('Authorization', 'Basic ' + btoa(username + ":" + password));
+            xhr.setRequestHeader('Authorization', 'Basic ' + btoa(username + ':' + password));
         },
         success: successFn
     });

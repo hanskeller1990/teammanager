@@ -20,11 +20,11 @@ function listTrainings() {
                     get('teams/' + training.TeamId, function(data) {
                         if (noError(data)) {
                             teams[training.TeamId] = data[0];
-                            writeTrainingsEntry("trainingsList", training);
+                            writeTrainingsEntry('trainingsList', training);
                         }
                     });
                 } else {
-                    writeTrainingsEntry("trainingsList", training);
+                    writeTrainingsEntry('trainingsList', training);
                 }
             });
         }
@@ -44,14 +44,14 @@ function listOwnTeamsTrainings() {
                             teams[training.TeamId] = data[0];
                             memberId = memberIdOfUser(data[0].Members);
                             if (memberId > 0) {
-                                writeTrainingsEntry("teamTrainingsList", training);
+                                writeTrainingsEntry('teamTrainingsList', training);
                             }
                         }
                     });
                 } else {
                     memberId = memberIdOfUser(teams[training.TeamId].Members);
                     if (memberId > 0) {
-                        writeTrainingsEntry("teamTrainingsList", training);
+                        writeTrainingsEntry('teamTrainingsList', training);
                     }
                 }
             });

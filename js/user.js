@@ -1,6 +1,6 @@
 var username, password, userId;
 
-$(document).bind("pagebeforechange", function(event, data) {
+$(document).bind('pagebeforechange', function(event, data) {
     if (window.location.hash !== '#login' && window.location.hash !== '#signup') {
         if (!username || !password || !userId) {
             username = localStorage.getItem('username');
@@ -37,7 +37,7 @@ function change() {
     mail = $('#txt-settings-mail').val();
 
     if (firstname === '' || lastname === '' || mail === '') {
-        popup("settings-popup", "Fehlende Angaben", "Bitte füllen Sie alle Felder aus.", 2000);
+        popup('settings-popup', 'Fehlende Angaben', 'Bitte füllen Sie alle Felder aus.', 2000);
         return;
     }
 
@@ -48,13 +48,13 @@ function change() {
         '}';
     put('users/' + UserId, putData, function(data) {
         if (noError(data)) {
-            popup("settings-popup", "Erfolg", "Daten erfolgreich geändert", 2000);
-            localName = localStorage.getItem("username")
+            popup('settings-popup', 'Erfolg', 'Daten erfolgreich geändert', 2000);
+            localName = localStorage.getItem('username')
             if (localName && localName !== mail) {
-                localStorage.setItem("username", mail);
+                localStorage.setItem('username', mail);
             }
         } else {
-            popup("settings-popup", data.type, data.message, 2000);
+            popup('settings-popup', data.type, data.message, 2000);
         }
     });
 }
@@ -64,11 +64,11 @@ function changePW() {
     passwordConfirm = $('#txt-settings-password-confirm').val();
 
     if (password === '' || passwordConfirm === '') {
-        popup("settings-popup", "Fehlende Angaben", "Bitte füllen Sie alle Felder aus.", 2000);
+        popup('settings-popup', 'Fehlende Angaben', 'Bitte füllen Sie alle Felder aus.', 2000);
         return;
     }
     if (password !== passwordConfirm) {
-        popup("settings-popup", "Fehler", "Die Beiden Passwörter stimmen nicht überein", 2000);
+        popup('settings-popup', 'Fehler', 'Die Beiden Passwörter stimmen nicht überein', 2000);
         return;
     }
     putData = '{' +
@@ -76,13 +76,13 @@ function changePW() {
         '}';
     put('users/' + UserId, putData, function(data) {
         if (noError(data)) {
-            popup("settings-popup", "Erfolg", "Passwort erfolgreich geändert", 2000);
-            localPW = localStorage.getItem("password")
+            popup('settings-popup', 'Erfolg', 'Passwort erfolgreich geändert', 2000);
+            localPW = localStorage.getItem('password')
             if (localPW && localPW !== password) {
-                localStorage.setItem("password", password);
+                localStorage.setItem('password', password);
             }
         } else {
-            popup("settings-popup", data.type, data.message, 2000);
+            popup('settings-popup', data.type, data.message, 2000);
         }
     });
 }
@@ -93,14 +93,14 @@ function login() {
     password = $('#txt-login-password').val();
     saveCredentials = $('#chck-login-rememberme').is(':checked');
     if (username === '' || password === '') {
-        popup("login-popup", "Fehlende Angaben", "Bitte füllen Sie alle Felder aus.", 2000);
+        popup('login-popup', 'Fehlende Angaben', 'Bitte füllen Sie alle Felder aus.', 2000);
         return;
     }
     // get('users?Email=' + username + ')', function(data) {
     get('users', function(data) {
         debug(data);
         if (!noError(data)) {
-            popup("login-popup", data.type, data.message, 2000);
+            popup('login-popup', data.type, data.message, 2000);
             return;
         }
         data.forEach(function(user) {
@@ -126,11 +126,11 @@ function signup() {
     passwordConfirm = $('#txt-signup-password-confirm').val();
 
     if (firstname === '' || lastname === '' || mail === '' || password === '' || passwordConfirm === '') {
-        popup("signup-popup", "Fehlende Angaben", "Bitte füllen Sie alle Felder aus.", 2000);
+        popup('signup-popup', 'Fehlende Angaben', 'Bitte füllen Sie alle Felder aus.', 2000);
         return;
     }
     if (password !== passwordConfirm) {
-        popup("signup-popup", "Fehler", "Die Beiden Passwörter stimmen nicht überein", 2000);
+        popup('signup-popup', 'Fehler', 'Die Beiden Passwörter stimmen nicht überein', 2000);
         return;
     }
     postData = '{' +
@@ -141,9 +141,18 @@ function signup() {
         '}';
     post('register', postData, function(data) {
         if (noError(data)) {
-
+            popup('signup-popup', data.type, data.message, 2000);
+            $.mobile.changePage('#login');
         } else {
-            popup("signup-popup", data.type, data.message, 2000);
+            popup('signup-popup', data.type, data.message, 2000);
         }
     });
+}
+
+function logout() {
+    username,
+    password,
+    userId = '';
+    localStorage.clear();
+    window.location.hash = '#login';
 }
