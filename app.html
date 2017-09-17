@@ -22,20 +22,22 @@
 </head>
 
 <body>
-    <div data-role="page">
+    <div data-role="page" id="home">
         <div data-role="header">
             <h1>TeamManager</h1>
-            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
             <h4>Team</h4>
             <ul data-role="listview">
                 <li><a href="#teams">Teamübersicht</a></li>
+                <li><a href="#new-team">Neues Team erstellen</a></li>
             </ul>
             <hr/>
             <h4>Training</h4>
             <ul data-role="listview">
                 <li><a href="#own-teams-trainings">Trainings eigene Teams</a></li>
+                <li><a href="#new-training">Neues Team erstellen</a></li>
                 <li><a href="#trainings">Trainingsübersicht</a></li>
             </ul>
             <hr/>
@@ -44,6 +46,16 @@
                 <li><a href="#settings">Benutzereinstellungen</a></li>
                 <li><a onclick="logout()">Abmelden</a></li>
             </ul>
+        </div>
+        <div data-role="footer" data-position="fixed" style="overflow:hidden;">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#teams">Teamsübersicht</a></li>
+                    <li><a href="#own-teams-trainings">Trainings eigene Teams</a></li>
+                    <li><a href="#new-training">Neues Training</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -97,6 +109,7 @@
     <div data-role="page" id="settings">
         <div data-role="header">
             <h1>TeamManager</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
             <h3>Settings</h3>
@@ -115,6 +128,16 @@
             <div data-role="popup" id="settings-popup" data-position-to="window" data-transition="turn">
                 <h4 id="settings-popup-title"></h4>
                 <p id="settings-popup-text"></p>
+            </div>
+        </div>
+        <div data-role="footer" data-position="fixed" style="overflow:hidden;">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#teams">Teamsübersicht</a></li>
+                    <li><a href="#own-teams-trainings">Trainings eigene Teams</a></li>
+                    <li><a href="#new-training">Neues Training</a></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -144,7 +167,7 @@
     <div data-role="page" id="teams">
         <div data-role="header">
             <h1>TeamManager</h1>
-            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
             <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
@@ -161,12 +184,23 @@
                 </tbody>
             </table>
         </div>
+        <div data-role="footer" data-position="fixed" style="overflow:hidden;">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#teams">Teamsübersicht</a></li>
+                    <li><a href="#own-teams-trainings">Trainings eigene Teams</a></li>
+                    <li><a href="#new-training">Neues Training</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div data-role="page" id="team-members">
         <div data-role="header">
             <h1>TeamManager</h1>
-            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+            <a href="#teams" data-icon="back">Zurück</a>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
             <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
@@ -182,12 +216,22 @@
                 </tbody>
             </table>
         </div>
+        <div data-role="footer" data-position="fixed" style="overflow:hidden;">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#teams">Teamsübersicht</a></li>
+                    <li><a href="#own-teams-trainings">Trainings eigene Teams</a></li>
+                    <li><a href="#new-training">Neues Training</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div data-role="page" id="trainings">
         <div data-role="header">
             <h1>TeamManager</h1>
-            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
             <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
@@ -204,12 +248,22 @@
                 </tbody>
             </table>
         </div>
+        <div data-role="footer" data-position="fixed" style="overflow:hidden;">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#teams">Teamsübersicht</a></li>
+                    <li><a href="#own-teams-trainings">Trainings eigene Teams</a></li>
+                    <li><a href="#new-training">Neues Training</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div data-role="page" id="own-teams-trainings">
         <div data-role="header">
             <h1>TeamManager</h1>
-            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
             <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
@@ -226,9 +280,17 @@
                 </tbody>
             </table>
         </div>
+        <div data-role="footer" data-position="fixed" style="overflow:hidden;">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#teams">Teamsübersicht</a></li>
+                    <li><a href="#own-teams-trainings">Trainings eigene Teams</a></li>
+                    <li><a href="#new-training">Neues Training</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-
 </body>
 
 </html>
