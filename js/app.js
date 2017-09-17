@@ -45,9 +45,6 @@ $(document).bind('pagebeforechange', function(event, data) {
 var basePath = 'https://zbw.lump.ch/api/v1';
 
 
-UserId = 133;
-
-
 function get(path, successFn) {
     call(path, null, successFn, 'GET');
 }

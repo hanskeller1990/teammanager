@@ -60,7 +60,7 @@ function listOwnTeamsTrainings() {
 }
 
 function anmelden(trainingId) {
-    postData = '{"UserId": ' + UserId + ',"TrainingId": ' + trainingId + '}';
+    postData = '{"UserId": ' + userId + ',"TrainingId": ' + trainingId + '}';
     post('participants', postData, listTrainings());
 }
 
@@ -96,7 +96,7 @@ function writeTrainingsEntry(id, training) {
 function participantIdOfUser(participants) {
     let participantId = 0;
     participants.forEach(function(participant) {
-        if (participant.UserId == UserId) {
+        if (participant.UserId == userId) {
             return participantId = participant.ParticipantId;
         }
     });

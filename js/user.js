@@ -20,7 +20,7 @@ $(document).on('pagebeforeshow', '#settings', function() {
 
 
 function showUser() {
-    get('users/' + UserId, function(data) {
+    get('users/' + userId, function(data) {
         debug(data[0]);
         if (data[0]) {
             user = data[0];
@@ -46,7 +46,7 @@ function change() {
         '"FirstName": "' + firstname + '",' +
         '"Email": "' + mail + '"' +
         '}';
-    put('users/' + UserId, putData, function(data) {
+    put('users/' + userId, putData, function(data) {
         if (noError(data)) {
             popup('settings-popup', 'Erfolg', 'Daten erfolgreich geändert', 2000);
             localName = localStorage.getItem('username')
@@ -74,7 +74,7 @@ function changePW() {
     putData = '{' +
         '"Password": "' + password + '"' +
         '}';
-    put('users/' + UserId, putData, function(data) {
+    put('users/' + userId, putData, function(data) {
         if (noError(data)) {
             popup('settings-popup', 'Erfolg', 'Passwort erfolgreich geändert', 2000);
             localPW = localStorage.getItem('password')

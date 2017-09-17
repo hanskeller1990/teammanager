@@ -33,7 +33,7 @@ function listTeams() {
 }
 
 function beitritt(teamid) {
-    postData = '{"UserId": ' + UserId + ',"TeamId": ' + teamid + '}';
+    postData = '{"UserId": ' + userId + ',"TeamId": ' + teamid + '}';
     post('members', postData, listTeams());
 }
 
@@ -73,7 +73,7 @@ function listMembers(teamid) {
 function memberIdOfUser(members) {
     let memberId = 0;
     members.forEach(function(member) {
-        if (member.UserId == UserId) {
+        if (member.UserId == userId) {
             return memberId = member.MemberId;
         }
     });
