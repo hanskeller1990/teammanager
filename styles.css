@@ -1,0 +1,14 @@
+.ui-navbar .ui-btn {
+    background-color: #f6f6f6;
+    border-color: #ddd;
+    color: #333;
+    text-shadow: 0 1px 0 #f3f3f3;
+}
+
+.ui-navbar .ui-btn:hover {
+    background-color: #ededed;
+}
+
+.ui-navbar .ui-btn.ui-btn-active {
+    background-color: #cccccc;
+}

@@ -42,6 +42,21 @@ $(document).bind('pagebeforechange', function(event, data) {
         null;
 });
 
+$(function() {    
+    $("[data-role='navbar']").navbar();    
+    $("[data-role='header'], [data-role='footer']").toolbar();
+});
+// Update the contents of the toolbars
+$(document).on('pagecontainerchange', function(event, data) { 
+    var current = window.location.hash;
+    $("[data-role='navbar'] a.ui-btn-active").removeClass("ui-btn-active");
+    $("[data-role='navbar'] a").each(function() {
+        if ($(this).attr('href') === current) {
+            $(this).addClass("ui-btn-active");
+        }
+    });
+});
+
 var basePath = 'https://zbw.lump.ch/api/v1';
 
 
