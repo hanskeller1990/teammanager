@@ -15,7 +15,7 @@ function listTeams() {
                     '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>' +
                     '<td>Ja<button onclick="austritt(' + memberId + ')">Austreten</button></td>' +
                     '<td><a href="#team-members?id=' + team.TeamId + '">Mitglieder</a></td>' +
-                    '<td><a href="#team-edit?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a></td>' +
+                    '<td><a href="#team-detail?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a></td>' +
                     '</tr>';
             } else {
                 var content =
@@ -24,7 +24,7 @@ function listTeams() {
                     '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>' +
                     '<td>Nein<button onclick="beitritt(' + team.TeamId + ')">Beitreten</button></td>' +
                     '<td><a href="#team-members?id=' + team.TeamId + '">Mitglieder</a></td>' +
-                    '<td><a href="#team-edit?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a></td>' +
+                    '<td><a href="#team-detail?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a></td>' +
                     '</tr>';
             }
             $('tbody#teamList').append(content);
@@ -49,26 +49,97 @@ $(document).on('pagebeforeshow', '#team-members', function(e, data) {
 
 function listMembers(teamid) {
     $('tbody#teamMembers').empty();
+    getTeam(teamid, function(team) {
+        team.Members.forEach(function(member) {
+            get('users/' + member.UserId, function(data) {
+                debug(data[0]);
+                if (data[0]) {
+                    user = data[0];
+                    var content =
+                        '<tr>' +
+                        '<td>' + user.FirstName + '</td>' +
+                        '<td>' + user.LastName + '</td>' +
+                        '</tr>';
+                    $('tbody#teamMembers').append(content);
+                }
+            });
+        });
+    });
+};
+
+$(document).on('pagebeforeshow', '#team-detail', function(e, data) {
+    if ($.mobile.pageData) {
+        getTeamDetail($.mobile.pageData.id);
+    } else {
+        getTeamDetail();
+    }
+});
+
+function getTeamDetail(teamid) {
+    if (teamid) {
+        getTeam(teamid, function(team) {
+            showTeamDetail(team, team.OwnerId)
+        });
+    } else {
+        showTeamDetail({}, userId)
+    }
+}
+
+function showTeamDetail(team, ownerId) {
+    get('users/' + ownerId, function(data) {
+        if (data[0]) {
+            $('#number-team-id').val(team.TeamId);
+            $('#txt-team-owner').val(data[0].FirstName + ' ' + data[0].LastName);
+            $('#txt-team-name').val(team.Name);
+            $('#txt-team-website').val(team.Website);
+            if (team.Members && memberIdOfUser(team.Members) > 0) {
+                $('#chck-team-member').attr('checked', true).checkboxradio('refresh');
+            }
+        }
+    });
+    if (team.TeamId) {
+        $('#btn-team-delete').show();
+    } else {
+        $('#btn-team-delete').hide();
+    }
+}
+
+function getTeam(teamid, successFn) {
     get('teams/' + teamid, function(data) {
         debug(data[0]);
         if (data[0]) {
-            data[0].Members.forEach(function(member) {
-                get('users/' + member.UserId, function(data) {
-                    debug(data[0]);
-                    if (data[0]) {
-                        user = data[0];
-                        var content =
-                            '<tr>' +
-                            '<td>' + user.FirstName + '</td>' +
-                            '<td>' + user.LastName + '</td>' +
-                            '</tr>';
-                        $('tbody#teamMembers').append(content);
-                    }
-                });
-            });
+            successFn(data[0]);
         }
     });
-};
+}
+
+function saveTeam() {
+    let team = {};
+    team.TeamId = $('#number-team-id').val();
+    team.Name = $('#txt-team-name').val();
+    team.Website = $('#txt-team-website').val();
+    // if (team.Members && memberIdOfUser(team.Members) > 0) {
+    //     $('#chck-team-member').attr('checked', true).checkboxradio('refresh');
+    // }
+    if (!team.TeamId) {
+        team.OwnerId = userId;
+        post('teams', JSON.stringify(team), function(data) {
+            $.mobile.changePage('#teams');
+        });
+    } else {
+        put('teams/' + team.TeamId, JSON.stringify(team), function(data) {
+            debug(data);
+        });
+    }
+}
+
+function deleteTeam() {
+    teamId = $('#number-team-id').val();
+    del('teams/' + teamId, function(data) {
+        $.mobile.changePage('#teams');
+    });
+}
+
 
 function memberIdOfUser(members) {
     let memberId = 0;

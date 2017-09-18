@@ -177,6 +177,34 @@
         </div>
     </div>
 
+    <div data-role="page" id="team-detail">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+            <label for="number-team-id">Team ID:</label>
+            <input type="number" name="team-id" pattern="[0-9]*" id="number-team-id" disabled>
+            <label for="txt-team-owner">Owner:</label>
+            <input type="text" name="team-owner" id="txt-team-owner" disabled>
+
+            <label for="txt-team-name">Team Name:</label>
+            <input type="text" name="team-name" id="txt-team-name">
+
+            <label for="txt-team-website">Team Website:</label>
+            <input type="text" name="team-website" id="txt-team-website">
+
+            <fieldset data-role="controlgroup">
+                <legend>Team Beitreten:</legend>
+                <input type="checkbox" name="chck-team-entry" id="chck-team-member">
+                <label for="chck-team-member">Beitreten</label>
+            </fieldset>
+            <a onclick="saveTeam()" data-role="button" data-icon="check" data-theme="b">Speichern</a>
+            <a onclick="deleteTeam()" data-role="button" data-icon="delete" data-theme="b" id="btn-team-delete">Löschen</a>
+            <a href="#teams" data-role="button" data-icon="arrow-l" data-theme="b">Zurück</a>
+        </div>
+    </div>
+
     <div data-role="page" id="team-members">
         <div data-role="header">
             <h1>TeamManager</h1>
