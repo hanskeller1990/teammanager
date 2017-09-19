@@ -99,12 +99,39 @@ function showTrainingDetail(training, teamId) {
             }
         });
     } else {
-
+        get('teams', function(teams) {
+            $('#number-training-id').val(training.TrainingId);
+            ownTeams(teams).forEach(function(team) {
+                $('#cmbx-training-teamid').append('<option value="' + team.TeamId + '">' + team.Name + '</option>');
+            });
+            $('#txt-training-title').val(training.Title);
+            $('#txt-training-date').val(training.Date);
+            // if (team.Participants && memberIdOfUser(team.Members) > 0) {
+            //     $('#chck-training-participant').attr('checked', true).checkboxradio('refresh');
+            // }
+        });
     }
     if (training.TrainingId) {
         $('#btn-training-delete').show();
     } else {
         $('#btn-training-delete').hide();
+    }
+}
+
+function saveTraining() {
+    let training = {};
+    training.TrainingId = $('#number-training-id').val();
+    training.TeamId = $('#cmbx-training-teamid').val();
+    training.Title = $('#txt-training-title').val();
+    training.Date = $('#txt-training-date').val();
+    if (!training.TrainingId) {
+        post('trainings', JSON.stringify(training), function(data) {
+            $.mobile.changePage('#training');
+        });
+    } else {
+        put('trainings/' + training.TrainingId, JSON.stringify(team), function(data) {
+            debug(data);
+        });
     }
 }
 

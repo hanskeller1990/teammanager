@@ -1,31 +1,35 @@
 $(document).on('pagebeforeshow', '#teams', function() {
-    listTeams();
+    listTeams('teamList');
 });
 
-function listTeams() {
-    $('tbody#teamList').empty();
+$(document).on('pagebeforeshow', '#ownTeams', function() {
+    listTeams('ownTeamList', true);
+});
+
+function listTeams(id, own) {
+    $('tbody#' + id).empty();
     get('teams', function(data) {
         debug(data);
         data.forEach(function(team) {
             memberId = memberIdOfUser(team.Members);
-
-            var content =
-                '<tr>' +
-                '<td>' + team.Name + '</td>' +
-                '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>';
-            if (memberId > 0) {
+            if (!own || (own && memberId > 0)) {
+                var content =
+                    '<tr>' +
+                    '<td>' + team.Name + '</td>' +
+                    '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>';
+                if (memberId > 0) {
+                    content +=
+                        '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="austritt(' + memberId + ')">Austreten</button></td>';
+                } else {
+                    content +=
+                        '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="beitritt(' + team.TeamId + ')">Beitreten</button></td>';
+                }
                 content +=
-                    '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="austritt(' + memberId + ')">Austreten</button></td>';
-            } else {
-                content +=
-                    '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="beitritt(' + team.TeamId + ')">Beitreten</button></td>';
+                    '<td><a href="#team-edit?teamId=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
+                    'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
+                    '</tr>';
             }
-            content +=
-                '<td><a href="#team-edit?teamId=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
-                'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
-                '</tr>';
-
-            $('tbody#teamList').append(content);
+            $('tbody#' + id).append(content);
         }, this);
     });
 }
@@ -151,7 +155,7 @@ function memberIdOfUser(members) {
 
 function ownTeams(teams) {
     let ownTeams = [];
-    teams.forEach(function(teams) {
+    teams.forEach(function(team) {
         if (team.OwnerId == userId) {
             ownTeams.push(team);
         }
