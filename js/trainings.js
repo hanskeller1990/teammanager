@@ -6,6 +6,9 @@ $(document).on('pagebeforeshow', '#own-teams-trainings', function() {
     listOwnTeamsTrainings();
 });
 
+$(document).on('pagebeforeshow', '#training-edit', function() {
+    ();
+});
 
 var teams;
 
@@ -57,6 +60,44 @@ function listOwnTeamsTrainings() {
             });
         }
     });
+}
+
+function getTrainingDetail(trainingId) {
+    if (trainingId) {
+        getTraining(trainingId, function(training) {
+            showTrainingDetail(training, training.TeamId)
+        });
+    } else {
+        showTrainingDetail({}, userId)
+    }
+}
+
+function getTraining(trainingId, successFn) {
+    get('trainings/' + trainingId, function(data) {
+        debug(data[0]);
+        if (data[0]) {
+            successFn(data[0]);
+        }
+    });
+}
+
+function showTrainingDetail(training, teamId) {
+    get('teams/' + teamId, function(data) {
+        if (data[0]) {
+            $('#number-team-id').val(team.TeamId);
+            $('#txt-team-owner').val(data[0].FirstName + ' ' + data[0].LastName);
+            $('#txt-team-name').val(team.Name);
+            $('#txt-team-website').val(team.Website);
+            if (team.Members && memberIdOfUser(team.Members) > 0) {
+                $('#chck-team-member').attr('checked', true).checkboxradio('refresh');
+            }
+        }
+    });
+    if (team.TeamId) {
+        $('#btn-team-delete').show();
+    } else {
+        $('#btn-team-delete').hide();
+    }
 }
 
 function anmelden(trainingId) {
