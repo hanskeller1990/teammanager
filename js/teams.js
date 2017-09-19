@@ -67,7 +67,7 @@ function listMembers(teamid) {
     });
 };
 
-$(document).on('pagebeforeshow', '#team-detail', function(e, data) {
+$(document).on('pagebeforeshow', '#team-edit', function(e, data) {
     if ($.mobile.pageData) {
         getTeamDetail($.mobile.pageData.id);
     } else {
