@@ -21,7 +21,7 @@ function listTeams() {
                     '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="beitritt(' + team.TeamId + ')">Beitreten</button></td>';
             }
             content +=
-                '<td><a href="#team-edit?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
+                '<td><a href="#team-edit?teamId=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
                 'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
                 '</tr>';
 
@@ -67,7 +67,7 @@ function listMembers(teamid) {
 
 $(document).on('pagebeforeshow', '#team-edit', function(e, data) {
     if ($.mobile.pageData) {
-        getTeamDetail($.mobile.pageData.id);
+        getTeamDetail($.mobile.pageData.teamId);
     } else {
         getTeamDetail();
     }
