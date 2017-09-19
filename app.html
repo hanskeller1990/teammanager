@@ -132,28 +132,6 @@
         </div>
     </div>
 
-
-    <div data-role="page" id="members">
-        <div data-role="header">
-            <h1>TeamManager</h1>
-            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
-        </div>
-        <div role="main" class="ui-content">
-            <ul id="memberlist"></ul>
-        </div>
-    </div>
-
-    <div data-role="page" id="members-detail">
-        <div data-role="header">
-            <h1>TeamManager</h1>
-            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
-        </div>
-        <div role="main" class="ui-content">
-            <p id="test"></p>
-        </div>
-    </div>
-
-
     <div data-role="page" id="ownTeams">
         <div data-role="header">
             <h1>Eigens Team</h1>
@@ -232,26 +210,19 @@
             <a onclick="saveTeam()" data-role="button" data-icon="check" data-theme="b">Speichern</a>
             <a onclick="deleteTeam()" data-role="button" data-icon="delete" data-theme="b" id="btn-team-delete">Löschen</a>
             <a href="#teams" data-role="button" data-icon="arrow-l" data-theme="b">Zurück</a>
-        </div>
-    </div>
-
-    <div data-role="page" id="team-members">
-        <div data-role="header">
-            <h1>Teammitglieder</h1>
-            <a href="#teams" data-icon="back">Zurück</a>
-            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
-        </div>
-        <div role="main" class="ui-content">
-            <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
-                <thead>
-                    <tr class="ui-bar-d">
-                        <th>Vorname</th>
-                        <th>Nachname</th>
-                    </tr>
-                </thead>
-                <tbody id="teamMembers">
-                </tbody>
-            </table>
+            <div id="teamDetailMembers">
+                <h3>Mitglieder</h3>
+                <table data-role="table" id="table-teamMembers" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                    <thead>
+                        <tr class="ui-bar-d">
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teamMembers">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

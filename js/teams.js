@@ -43,32 +43,6 @@ function austritt(memberid) {
     del('members/' + memberid, listTeams());
 }
 
-$(document).on('pagebeforeshow', '#team-members', function(e, data) {
-    if ($.mobile.pageData && $.mobile.pageData.id) {
-        listMembers($.mobile.pageData.id);
-    }
-});
-
-function listMembers(teamid) {
-    $('tbody#teamMembers').empty();
-    getTeam(teamid, function(team) {
-        team.Members.forEach(function(member) {
-            get('users/' + member.UserId, function(data) {
-                debug(data[0]);
-                if (data[0]) {
-                    user = data[0];
-                    var content =
-                        '<tr>' +
-                        '<td>' + user.FirstName + '</td>' +
-                        '<td>' + user.LastName + '</td>' +
-                        '</tr>';
-                    $('tbody#teamMembers').append(content);
-                }
-            });
-        });
-    });
-};
-
 $(document).on('pagebeforeshow', '#team-edit', function(e, data) {
     if ($.mobile.pageData) {
         getTeamDetail($.mobile.pageData.teamId);
@@ -101,8 +75,11 @@ function showTeamDetail(team, ownerId) {
     });
     if (team.TeamId) {
         $('#btn-team-delete').show();
+        $('#teamDetailMembers').show();
+        listMembers(team.Members);
     } else {
         $('#btn-team-delete').hide();
+        $('#teamDetailMembers').hide();
     }
 }
 
@@ -114,6 +91,26 @@ function getTeam(teamid, successFn) {
         }
     });
 }
+
+
+function listMembers(members) {
+    $('tbody#teamMembers').empty();
+    members.forEach(function(member) {
+        get('users/' + member.UserId, function(data) {
+            debug(data[0]);
+            if (data[0]) {
+                user = data[0];
+                var content =
+                    '<tr>' +
+                    '<td>' + user.FirstName + '</td>' +
+                    '<td>' + user.LastName + '</td>' +
+                    '</tr>';
+                $('tbody#teamMembers').append(content);
+            }
+        });
+    });
+};
+
 
 function saveTeam() {
     let team = {};
