@@ -6,6 +6,11 @@ $(document).on('pagebeforeshow', '#own-teams-trainings', function() {
     listOwnTeamsTrainings();
 });
 
+$(document).on('pagebeforeshow', '#training-edit', function(e, data) {
+    if ($.mobile.pageData && $.mobile.pageData.id) {
+        getTrainingDetail($.mobile.pageData.id);
+    }
+});
 
 var teams;
 
@@ -59,6 +64,44 @@ function listOwnTeamsTrainings() {
     });
 }
 
+function getTrainingDetail(trainingId) {
+    if (trainingId) {
+        getTraining(trainingId, function(training) {
+            showTrainingDetail(training, training.TeamId)
+        });
+    } else {
+        showTrainingDetail({}, userId)
+    }
+}
+
+function getTraining(trainingId, successFn) {
+    get('trainings/' + trainingId, function(data) {
+        debug(data[0]);
+        if (data[0]) {
+            successFn(data[0]);
+        }
+    });
+}
+
+function showTrainingDetail(training, teamId) {
+    get('teams/' + teamId, function(data) {
+        if (data[0]) {
+            $('#number-team-id').val(team.TeamId);
+            $('#txt-team-owner').val(data[0].FirstName + ' ' + data[0].LastName);
+            $('#txt-team-name').val(team.Name);
+            $('#txt-team-website').val(team.Website);
+            if (team.Members && memberIdOfUser(team.Members) > 0) {
+                $('#chck-team-member').attr('checked', true).checkboxradio('refresh');
+            }
+        }
+    });
+    if (team.TeamId) {
+        $('#btn-team-delete').show();
+    } else {
+        $('#btn-team-delete').hide();
+    }
+}
+
 function anmelden(trainingId) {
     postData = '{"UserId": ' + userId + ',"TrainingId": ' + trainingId + '}';
     callback = listTrainings();
@@ -84,8 +127,10 @@ function writeTrainingsEntry(id, training) {
             '<td>' + training.Title + '</td>' +
             '<td>' + teams[training.TeamId].Name + '</td>' +
             '<td>' + training.Date + '</td>' +
-            '<td>Ja<button onclick="abmelden(' + participantId + ')">Abmelden</button></td>' +
+            '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="abmelden(' + participantId + ')">Abmelden</button></td>' +
             '<td>' + training.Participants.length + '</td>' +
+            '<td><a href="#training-edit?id=' + training.TrainingId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
+            'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
             '</tr>';
     } else {
         var content =
@@ -93,8 +138,10 @@ function writeTrainingsEntry(id, training) {
             '<td>' + training.Title + '</td>' +
             '<td>' + teams[training.TeamId].Name + '</td>' +
             '<td>' + training.Date + '</td>' +
-            '<td>Nein<button onclick="anmelden(' + training.TrainingId + ')">Anmelden</button></td>' +
+            '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="anmelden(' + training.TrainingId + ')">Anmelden</button></td>' +
             '<td>' + training.Participants.length + '</td>' +
+            '<td><a href="#training-edit?id=' + training.TrainingId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
+            'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
             '</tr>';
     }
 
