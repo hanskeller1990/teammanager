@@ -40,7 +40,7 @@
                 <li><a href="#training-edit" class="appItem">Neues Training erstellen</a></li>
                 <li><a href="#trainings" class="appItem">Trainingsübersicht</a></li>
             </ul>
-            <h2  class="appHeader">Administration</h2>
+            <h2 class="appHeader">Administration</h2>
             <ul data-role="listview" data-inset="true" data-divider-theme="d">
                 <li><a href="#settings" class="appItem">Benutzereinstellungen</a></li>
                 <li><a onclick="logout()" class="appItem">Abmelden</a></li>
@@ -239,6 +239,7 @@
                         <th>Datum</th>
                         <th>Angemeldet</th>
                         <th>Teilnehmer</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="trainingsList">
@@ -261,6 +262,7 @@
                         <th>Datum</th>
                         <th>Angemeldet</th>
                         <th>Teilnehmer</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="teamTrainingsList">
@@ -269,7 +271,7 @@
         </div>
     </div>
 
-    <div data-role="page" id="trainings-edit">
+    <div data-role="page" id="training-edit">
         <div data-role="header">
             <h1>TeamManager</h1>
             <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
@@ -283,7 +285,7 @@
             <label for="txt-training-title">Titel:</label>
             <input type="text" name="team-name" id="txt-team-name">
 
-            <label for="txt-training-date">Team Website:</label>
+            <label for="txt-training-date">Datum:</label>
             <input type="text" name="team-website" id="txt-training-date">
 
             <fieldset data-role="controlgroup">

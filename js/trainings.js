@@ -6,8 +6,10 @@ $(document).on('pagebeforeshow', '#own-teams-trainings', function() {
     listOwnTeamsTrainings();
 });
 
-$(document).on('pagebeforeshow', '#training-edit', function() {
-    ();
+$(document).on('pagebeforeshow', '#training-edit', function(e, data) {
+    if ($.mobile.pageData && $.mobile.pageData.id) {
+        getTrainingDetail($.mobile.pageData.id);
+    }
 });
 
 var teams;
@@ -125,8 +127,10 @@ function writeTrainingsEntry(id, training) {
             '<td>' + training.Title + '</td>' +
             '<td>' + teams[training.TeamId].Name + '</td>' +
             '<td>' + training.Date + '</td>' +
-            '<td>Ja<button onclick="abmelden(' + participantId + ')">Abmelden</button></td>' +
+            '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="abmelden(' + participantId + ')">Abmelden</button></td>' +
             '<td>' + training.Participants.length + '</td>' +
+            '<td><a href="#training-edit?id=' + training.TrainingId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
+            'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
             '</tr>';
     } else {
         var content =
@@ -134,8 +138,10 @@ function writeTrainingsEntry(id, training) {
             '<td>' + training.Title + '</td>' +
             '<td>' + teams[training.TeamId].Name + '</td>' +
             '<td>' + training.Date + '</td>' +
-            '<td>Nein<button onclick="anmelden(' + training.TrainingId + ')">Anmelden</button></td>' +
+            '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="anmelden(' + training.TrainingId + ')">Anmelden</button></td>' +
             '<td>' + training.Participants.length + '</td>' +
+            '<td><a href="#training-edit?id=' + training.TrainingId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
+            'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
             '</tr>';
     }
 
