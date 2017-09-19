@@ -8,27 +8,23 @@ function listTeams() {
         debug(data);
         data.forEach(function(team) {
             memberId = memberIdOfUser(team.Members);
+
+            var content =
+                '<tr>' +
+                '<td>' + team.Name + '</td>' +
+                '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>';
             if (memberId > 0) {
-                var content =
-                    '<tr>' +
-                    '<td>' + team.Name + '</td>' +
-                    '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>' +
-                    '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="austritt(' + memberId + ')">Austreten</button></td>' +
-                    '<td><a href="#team-members?id=' + team.TeamId + '">Mitglieder</a></td>' +
-                    '<td><a href="#team-edit?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
-                    'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
-                    '</tr>';
+                content +=
+                    '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="austritt(' + memberId + ')">Austreten</button></td>';
             } else {
-                var content =
-                    '<tr>' +
-                    '<td>' + team.Name + '</td>' +
-                    '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>' +
-                    '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="beitritt(' + team.TeamId + ')">Beitreten</button></td>' +
-                    '<td><a href="#team-members?id=' + team.TeamId + '">Mitglieder</a></td>' +
-                    '<td><a href="#team-edit?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
-                    'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
-                    '</tr>';
+                content +=
+                    '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="beitritt(' + team.TeamId + ')">Beitreten</button></td>';
             }
+            content +=
+                '<td><a href="#team-edit?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
+                'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
+                '</tr>';
+
             $('tbody#teamList').append(content);
         }, this);
     });
