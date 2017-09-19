@@ -52,7 +52,7 @@
             <div data-role="navbar">
                 <ul>
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#teams">Teamsübersicht</a></li>
+                    <li><a href="#teams">Teamübersicht</a></li>
                     <li><a href="#trainings">Trainingsübersicht</a></li>
                 </ul>
             </div>
@@ -183,11 +183,11 @@
 
     <div data-role="page" id="teams">
         <div data-role="header">
-            <h1>Teamsübersicht</h1>
+            <h1>Teamübersicht</h1>
             <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
-
+            <a href="#team-edit" class="ui-btn ui-icon-plus ui-btn-icon-left">Neues Team</a>
             <form>
                 <input id="filterTable-input" data-type="search">
             </form>
@@ -261,6 +261,7 @@
             <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
+            <a href="#training-edit" class="ui-btn ui-icon-plus ui-btn-icon-left">Neues Training</a>
                 <form>
                     <input id="filterTable-input-2" data-type="search">
                 </form>
@@ -333,7 +334,7 @@
 
     <div data-role="page" id="training-edit">
         <div data-role="header">
-            <h1>TeamManager</h1>
+            <h1 id="trainingEditHeader">Neues Training erstellen</h1>
             <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">

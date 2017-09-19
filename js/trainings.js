@@ -68,10 +68,12 @@ function listOwnTeamsTrainings() {
 
 function getTrainingDetail(trainingId) {
     if (trainingId) {
+        $("#trainingEditHeader").text("Training bearbeiten");
         getTraining(trainingId, function(training) {
             showTrainingDetail(training, training.TeamId)
         });
     } else {
+        $("#trainingEditHeader").text("Neues Training erstellen");
         showTrainingDetail({}, userId)
     }
 }
