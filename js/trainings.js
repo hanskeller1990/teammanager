@@ -118,6 +118,23 @@ function showTrainingDetail(training, teamId) {
     }
 }
 
+function saveTraining() {
+    let training = {};
+    training.TrainingId = $('#number-training-id').val();
+    training.TeamId = $('#cmbx-training-teamid').val();
+    training.Title = $('#txt-training-title').val();
+    training.Date = $('#txt-training-date').val();
+    if (!training.TrainingId) {
+        post('trainings', JSON.stringify(training), function(data) {
+            $.mobile.changePage('#training');
+        });
+    } else {
+        put('trainings/' + training.TrainingId, JSON.stringify(team), function(data) {
+            debug(data);
+        });
+    }
+}
+
 function anmelden(trainingId) {
     postData = '{"UserId": ' + userId + ',"TrainingId": ' + trainingId + '}';
     callback = listTrainings();
