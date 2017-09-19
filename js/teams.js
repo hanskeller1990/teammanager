@@ -15,7 +15,7 @@ function listTeams() {
                     '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>' +
                     '<td>Ja<button onclick="austritt(' + memberId + ')">Austreten</button></td>' +
                     '<td><a href="#team-members?id=' + team.TeamId + '">Mitglieder</a></td>' +
-                    '<td><a href="#team-detail?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a></td>' +
+                    '<td><a href="#team-edit?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a></td>' +
                     '</tr>';
             } else {
                 var content =
@@ -24,7 +24,7 @@ function listTeams() {
                     '<td><a href="' + team.Website + '" target="_blank">' + team.Website + '</a></td>' +
                     '<td>Nein<button onclick="beitritt(' + team.TeamId + ')">Beitreten</button></td>' +
                     '<td><a href="#team-members?id=' + team.TeamId + '">Mitglieder</a></td>' +
-                    '<td><a href="#team-detail?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a></td>' +
+                    '<td><a href="#team-edit?id=' + team.TeamId + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a></td>' +
                     '</tr>';
             }
             $('tbody#teamList').append(content);
