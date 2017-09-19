@@ -36,9 +36,9 @@
             </ul>
             <h2 class="appHeader">Training</h2>
             <ul data-role="listview" data-inset="true" data-divider-theme="d">
+                <li><a href="#trainings" class="appItem">Trainingsübersicht</a></li>
                 <li><a href="#own-teams-trainings" class="appItem">Trainings eigene Teams</a></li>
                 <li><a href="#training-edit" class="appItem">Neues Training erstellen</a></li>
-                <li><a href="#trainings" class="appItem">Trainingsübersicht</a></li>
             </ul>
             <h2 class="appHeader">Administration</h2>
             <ul data-role="listview" data-inset="true" data-divider-theme="d">
@@ -155,7 +155,7 @@
 
     <div data-role="page" id="teams">
         <div data-role="header">
-            <h1>TeamManager</h1>
+            <h1>Teamübersicht</h1>
             <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
@@ -163,7 +163,7 @@
             <form>
                 <input id="filterTable-input" data-type="search">
             </form>
-            <table data-role="table" id="movie-table" data-filter="true" data-input="#filterTable-input" class="ui-responsive">
+            <table data-role="table" id="movie-table" data-filter="true" data-input="#filterTable-input" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
             <thead>
                     <tr class="ui-bar-d">
                         <th>Name</th>
@@ -219,8 +219,6 @@
                     <tr class="ui-bar-d">
                         <th>Vorname</th>
                         <th>Nachname</th>
-                        <th>Beigetreten</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="teamMembers">
@@ -235,7 +233,10 @@
             <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
-            <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                <form>
+                    <input id="filterTable-input-2" data-type="search">
+                </form>
+                <table data-role="table" id="movie-table-2" data-filter="true" data-input="#filterTable-input-2" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
                 <thead>
                     <tr class="ui-bar-d">
                         <th>Title</th>
