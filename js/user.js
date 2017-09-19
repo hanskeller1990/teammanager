@@ -129,6 +129,10 @@ function signup() {
         popup('signup-popup', 'Fehlende Angaben', 'Bitte füllen Sie alle Felder aus.', 2000);
         return;
     }
+    if (password.length < 8) {
+        popup('signup-popup', 'Fehler', 'Das Passwort muss mindestens 8 Zeichen lang sein', 2000);
+        return;
+    }
     if (password !== passwordConfirm) {
         popup('signup-popup', 'Fehler', 'Die Beiden Passwörter stimmen nicht überein', 2000);
         return;
