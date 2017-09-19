@@ -51,7 +51,7 @@ $(document).on('pagecontainerchange', function(event, data) { 
     var current = window.location.hash;
     $("[data-role='navbar'] a.ui-btn-active").removeClass("ui-btn-active");
     $("[data-role='navbar'] a").each(function() {
-        if ($(this).attr('href') === current) {
+        if ($(this).attr('href') === current || (current === '' && $(this).attr('href') === '#home')) {
             $(this).addClass("ui-btn-active");
         }
     });
