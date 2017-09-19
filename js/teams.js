@@ -79,10 +79,12 @@ $(document).on('pagebeforeshow', '#team-edit', function(e, data) {
 
 function getTeamDetail(teamid) {
     if (teamid) {
+        $("#teamEditHeader").text("Team bearbeiten");
         getTeam(teamid, function(team) {
             showTeamDetail(team, team.OwnerId)
         });
     } else {
+        $("#teamEditHeader").text("Neues Team erstellen");
         showTeamDetail({}, userId)
     }
 }
