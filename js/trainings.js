@@ -74,7 +74,7 @@ function getTrainingDetail(trainingId) {
         });
     } else {
         $("#trainingEditHeader").text("Neues Training erstellen");
-        showTrainingDetail({}, userId)
+        showTrainingDetail({})
     }
 }
 
@@ -128,7 +128,7 @@ function saveTraining() {
     training.Date = $('#txt-training-date').val();
     if (!training.TrainingId) {
         post('trainings', JSON.stringify(training), function(data) {
-            $.mobile.changePage('#training');
+            $.mobile.changePage('#trainings');
         });
     } else {
         put('trainings/' + training.TrainingId, JSON.stringify(team), function(data) {
