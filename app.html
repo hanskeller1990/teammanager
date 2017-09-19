@@ -279,11 +279,12 @@
         <div role="main" class="ui-content">
             <label for="number-training-id">Training ID:</label>
             <input type="number" name="team-id" pattern="[0-9]*" id="number-training-id" disabled>
-            <label for="txt-training-teamid">Team:</label>
-            <input type="text" name="team-owner" id="txt-training-teamid" disabled>
+            <label for="cmbx-training-teamid">Team:</label>
+            <select name="cmbx-training-teamid" id="cmbx-training-teamid">
+            </select>
 
             <label for="txt-training-title">Titel:</label>
-            <input type="text" name="team-name" id="txt-team-name">
+            <input type="text" name="team-name" id="txt-training-title">
 
             <label for="txt-training-date">Datum:</label>
             <input type="text" name="team-website" id="txt-training-date">
@@ -293,9 +294,9 @@
                 <input type="checkbox" name="chck-training-entry" id="chck-team-member">
                 <label for="chck-team-member">Beitreten</label>
             </fieldset>
-            <a onclick="saveTeam()" data-role="button" data-icon="check" data-theme="b">Speichern</a>
-            <a onclick="deleteTeam()" data-role="button" data-icon="delete" data-theme="b" id="btn-team-delete">Löschen</a>
-            <a href="#teams" data-role="button" data-icon="arrow-l" data-theme="b">Zurück</a>
+            <a onclick="saveTraining()" data-role="button" data-icon="check" data-theme="b">Speichern</a>
+            <a onclick="deleteTraining()" data-role="button" data-icon="delete" data-theme="b" id="btn-training-delete">Löschen</a>
+            <a href="#trainings" data-role="button" data-icon="arrow-l" data-theme="b">Zurück</a>
         </div>
     </div>
 </body>
