@@ -93,6 +93,9 @@ function showTrainingDetail(training, teamId) {
             if (data[0]) {
                 $('#number-training-id').val(training.TrainingId);
                 $('#cmbx-training-teamid').append('<option value="' + data[0].TeamId + '">' + data[0].Name + '</option>');
+                $('#cmbx-training-teamid').selectedIndex = 0;
+                $('#cmbx-training-teamid').selectmenu('refresh');
+                $('#cmbx-training-teamid').attr('disabled', true);
                 $('#txt-training-title').val(training.Title);
                 $('#txt-training-date').val(training.Date);
                 // if (team.Participants && memberIdOfUser(team.Members) > 0) {

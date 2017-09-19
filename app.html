@@ -39,7 +39,7 @@
             <ul data-role="listview" data-inset="true" data-divider-theme="d">
                 <li><a href="#trainings" class="appItem">Trainingsübersicht</a></li>
                 <li><a href="#ownTrainings" class="appItem">Angemeldete Training</a></li>
-                <li><a href="#own-teams-trainings" class="appItem">Trainings eigene Teams</a></li>
+                <li><a href="#own-teams-trainings" class="appItem">Trainings beigetretene Teams</a></li>
                 <li><a href="#training-edit" class="appItem">Neues Training erstellen</a></li>
             </ul>
             <h2 class="appHeader">Administration</h2>
@@ -132,28 +132,6 @@
         </div>
     </div>
 
-
-    <div data-role="page" id="members">
-        <div data-role="header">
-            <h1>TeamManager</h1>
-            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
-        </div>
-        <div role="main" class="ui-content">
-            <ul id="memberlist"></ul>
-        </div>
-    </div>
-
-    <div data-role="page" id="members-detail">
-        <div data-role="header">
-            <h1>TeamManager</h1>
-            <a href="index.html" class="ui-btn" data-rel="back">abmelden</a>
-        </div>
-        <div role="main" class="ui-content">
-            <p id="test"></p>
-        </div>
-    </div>
-
-
     <div data-role="page" id="ownTeams">
         <div data-role="header">
             <h1>Beigetretene Teams</h1>
@@ -165,7 +143,7 @@
                 <input id="filterTable-input-3" data-type="search">
             </form>
             <table data-role="table" id="movie-table-3" data-filter="true" data-input="#filterTable-input-3" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
-            <thead>
+                <thead>
                     <tr class="ui-bar-d">
                         <th>Name</th>
                         <th>Website</th>
@@ -192,12 +170,12 @@
             </form>
             <table data-role="table" id="movie-table" data-filter="true" data-input="#filterTable-input" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
                 <thead>
-                <tr class="ui-bar-d">
-                    <th>Name</th>
-                    <th>Website</th>
-                    <th>Beigetreten</th>
-                    <th></th>
-                </tr>
+                    <tr class="ui-bar-d">
+                        <th>Name</th>
+                        <th>Website</th>
+                        <th>Beigetreten</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody id="teamList">
                 </tbody>
@@ -231,26 +209,19 @@
             <a onclick="saveTeam()" data-role="button" data-icon="check" data-theme="b">Speichern</a>
             <a onclick="deleteTeam()" data-role="button" data-icon="delete" data-theme="b" id="btn-team-delete">Löschen</a>
             <a href="#teams" data-role="button" data-icon="arrow-l" data-theme="b">Zurück</a>
-        </div>
-    </div>
-
-    <div data-role="page" id="team-members">
-        <div data-role="header">
-            <h1>Teammitglieder</h1>
-            <a href="#teams" data-icon="back">Zurück</a>
-            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
-        </div>
-        <div role="main" class="ui-content">
-            <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
-                <thead>
-                    <tr class="ui-bar-d">
-                        <th>Vorname</th>
-                        <th>Nachname</th>
-                    </tr>
-                </thead>
-                <tbody id="teamMembers">
-                </tbody>
-            </table>
+            <div id="teamDetailMembers">
+                <h3>Mitglieder</h3>
+                <table data-role="table" id="table-teamMembers" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                    <thead>
+                        <tr class="ui-bar-d">
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teamMembers">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -261,10 +232,10 @@
         </div>
         <div role="main" class="ui-content">
             <a href="#training-edit" class="ui-btn ui-icon-plus ui-btn-icon-left">Neues Training</a>
-                <form>
-                    <input id="filterTable-input-2" data-type="search">
-                </form>
-                <table data-role="table" id="movie-table-2" data-filter="true" data-input="#filterTable-input-2" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
+            <form>
+                <input id="filterTable-input-2" data-type="search">
+            </form>
+            <table data-role="table" id="movie-table-2" data-filter="true" data-input="#filterTable-input-2" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
                 <thead>
                     <tr class="ui-bar-d">
                         <th>Title</th>
@@ -293,14 +264,14 @@
             </form>
             <table data-role="table" id="movie-table-4" data-filter="true" data-input="#filterTable-input-4" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
                 <thead>
-                <tr class="ui-bar-d">
-                    <th>Title</th>
-                    <th>Team</th>
-                    <th>Datum</th>
-                    <th>Angemeldet</th>
-                    <th>Teilnehmer</th>
-                    <th></th>
-                </tr>
+                    <tr class="ui-bar-d">
+                        <th>Title</th>
+                        <th>Team</th>
+                        <th>Datum</th>
+                        <th>Angemeldet</th>
+                        <th>Teilnehmer</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody id="trainingsList">
                 </tbody>
