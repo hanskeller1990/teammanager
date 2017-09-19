@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <title>TeamManager</title>
@@ -8,41 +9,328 @@
     <script src="node_modules/jquery/src/jquery.js"></script>
     <script src="node_modules/jquery-mobile/js/jquery.mobile.js"></script>-->
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="./styles.css">
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    <script type="text/javascript">
-    
-    $(window).on("hashchange", function() {
-      console.log(window.location.hash);
-    });
-    </script>
+    <script src="js/jqm.page.params.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/teams.js"></script>
+    <script src="js/trainings.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/log.js"></script>
+    <script src="js/error.js"></script>
 </head>
+
 <body>
-
-  <section id="members" src="pages/members.html" default></section>
-  <section id="contact-details" src="pages/contact-details.htm"></section>
-  <section id="about" src="pages/about.htm" default></section>
-
-
-<div data-role="page">
-    <div data-role="header">
-        <h1>Login</h1>
+    <div data-role="page" id="home">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+            <h2 class="appHeader">Team</h2>
+            <ul data-role="listview" data-inset="true" data-divider-theme="d">
+                <li><a href="#teams" class="appItem">Teamübersicht</a></li>
+                <li><a href="#ownTeams" class="appItem">Beigetretene Teams</a></li>
+                <li><a href="#team-edit" class="appItem">Neues Team erstellen</a></li>
+            </ul>
+            <h2 class="appHeader">Training</h2>
+            <ul data-role="listview" data-inset="true" data-divider-theme="d">
+                <li><a href="#trainings" class="appItem">Trainingsübersicht</a></li>
+                <li><a href="#ownTrainings" class="appItem">Angemeldete Training</a></li>
+                <li><a href="#own-teams-trainings" class="appItem">Trainings beigetretene Teams</a></li>
+                <li><a href="#training-edit" class="appItem">Neues Training erstellen</a></li>
+            </ul>
+            <h2 class="appHeader">Administration</h2>
+            <ul data-role="listview" data-inset="true" data-divider-theme="d">
+                <li><a href="#settings" class="appItem">Benutzereinstellungen</a></li>
+                <li><a onclick="logout()" class="appItem">Abmelden</a></li>
+            </ul>
+        </div>
+        <div data-role="footer" data-position="fixed" style="overflow:hidden;">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#teams">Teamübersicht</a></li>
+                    <li><a href="#trainings">Trainingsübersicht</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div role="main" class="ui-content">
-        
-  <nav>
-        <a href="#members">Contacts</a>
-        <a href="#members-detail:0">About</a>
-      </nav>
-      
-        <h2 class="mc-text-center">Willkommen</h2>
-        <p class="mc-top-margin-1-5"><b>Bestehende Benutzer</b></p>
-        <a href="sign-in.html" class="ui-btn ui-btn-b ui-corner-all">Anmelden</a>
-        <p class="mc-top-margin-1-5"><b>Sie habe noch keinen Zugang?</b></p>
-        <a href="sign-up.html" class="ui-btn ui-btn-b ui-corner-all">Registrieren</a>
-        <p></p>
-    </div>
-</div>
 
+    <div data-role="page" id="login">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <h3>Sign In</h3>
+            <label for="txt-login-username">Benutzername (E-Mail)</label>
+            <input type="text" name="txt-username" id="txt-login-username">
+            <label for="txt-login-password">Passwort</label>
+            <input type="password" name="txt-password" id="txt-login-password">
+            <fieldset data-role="controlgroup">
+                <input type="checkbox" name="chck-rememberme" id="chck-login-rememberme">
+                <label for="chck-login-rememberme">angemeldet bleiben</label>
+            </fieldset>
+            <button onclick="login()" id="btn-login-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Anmelden</button>
+            <a href="#signup" class="ui-btn ui-btn-c ui-corner-all">Registrieren</a>
+            <div data-role="popup" id="login-popup" data-position-to="window" data-transition="turn">
+                <h4 id="login-popup-title"></h4>
+                <p id="login-popup-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="signup">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <h3>Sign Up</h3>
+            <label for="txt-signup-firstname">Vorname</label>
+            <input type="text" name="txt-firstname" id="txt-signup-firstname">
+            <label for="txt-signup-lastname">Name</label>
+            <input type="text" name="txt-lastname" id="txt-signup-lastname">
+            <label for="txt-signup-mail">Mail</label>
+            <input type="text" name="txt-mail" id="txt-signup-mail">
+            <label for="txt-signup-password">Passwort</label>
+            <input type="password" name="txt-password" id="txt-signup-password">
+            <label for="txt-signup-password-confirm">Passwort wiederholen</label>
+            <input type="password" name="txt-password-confirm" id="txt-signup-password-confirm">
+            <button onclick="signup()" id="btn-signup-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Registrieren</button>
+            <div data-role="popup" id="signup-popup" data-position-to="window" data-transition="turn">
+                <h4 id="signup-popup-title"></h4>
+                <p id="signup-popup-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="settings">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+            <h3>Settings</h3>
+            <label for="txt-settings-firstname">Vorname</label>
+            <input type="text" name="txt-firstname" id="txt-settings-firstname">
+            <label for="txt-settings-lastname">Name</label>
+            <input type="text" name="txt-lastname" id="txt-settings-lastname">
+            <label for="txt-settings-mail">Mail</label>
+            <input type="text" name="txt-mail" id="txt-settings-mail">
+            <button onclick="change()" id="btn-settings-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Daten ändern</button>
+            <label for="txt-settings-password">Passwort</label>
+            <input type="password" name="txt-password" id="txt-settings-password">
+            <label for="txt-settings-password-confirm">Passwort wiederholen</label>
+            <input type="password" name="txt-password-confirm" id="txt-settings-password-confirm">
+            <button onclick="changePW()" id="btn-settings-pw-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Passwort ändern</button>
+            <div data-role="popup" id="settings-popup" data-position-to="window" data-transition="turn">
+                <h4 id="settings-popup-title"></h4>
+                <p id="settings-popup-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="ownTeams">
+        <div data-role="header">
+            <h1>Eigens Team</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+
+            <form>
+                <input id="filterTable-input-3" data-type="search">
+            </form>
+            <table data-role="table" id="movie-table-3" data-filter="true" data-input="#filterTable-input-3" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
+                <thead>
+                    <tr class="ui-bar-d">
+                        <th>Name</th>
+                        <th>Website</th>
+                        <th>Beigetreten</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="ownTeamList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div data-role="page" id="teams">
+        <div data-role="header">
+            <h1>Teamübersicht</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+            <a href="#team-edit" class="ui-btn ui-icon-plus ui-btn-icon-left">Neues Team</a>
+            <form>
+                <input id="filterTable-input" data-type="search">
+            </form>
+            <table data-role="table" id="movie-table" data-filter="true" data-input="#filterTable-input" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
+                <thead>
+                    <tr class="ui-bar-d">
+                        <th>Name</th>
+                        <th>Website</th>
+                        <th>Beigetreten</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="teamList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div data-role="page" id="team-edit">
+        <div data-role="header">
+            <h1>Team bearbeiten</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+            <label for="number-team-id">Team ID:</label>
+            <input type="number" name="team-id" pattern="[0-9]*" id="number-team-id" disabled>
+            <label for="txt-team-owner">Owner:</label>
+            <input type="text" name="team-owner" id="txt-team-owner" disabled>
+
+            <label for="txt-team-name">Team Name:</label>
+            <input type="text" name="team-name" id="txt-team-name">
+
+            <label for="txt-team-website">Team Website:</label>
+            <input type="text" name="team-website" id="txt-team-website">
+
+            <fieldset data-role="controlgroup">
+                <legend>Team Beitreten:</legend>
+                <input type="checkbox" name="chck-team-member" id="chck-team-member">
+                <label for="chck-team-member">Beitreten</label>
+            </fieldset>
+            <a onclick="saveTeam()" data-role="button" data-icon="check" data-theme="b">Speichern</a>
+            <a onclick="deleteTeam()" data-role="button" data-icon="delete" data-theme="b" id="btn-team-delete">Löschen</a>
+            <a href="#teams" data-role="button" data-icon="arrow-l" data-theme="b">Zurück</a>
+            <div id="teamDetailMembers">
+                <h3>Mitglieder</h3>
+                <table data-role="table" id="table-teamMembers" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                    <thead>
+                        <tr class="ui-bar-d">
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teamMembers">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="trainings">
+        <div data-role="header">
+            <h1>Trainingsübersicht</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+            <a href="#training-edit" class="ui-btn ui-icon-plus ui-btn-icon-left">Neues Training</a>
+            <form>
+                <input id="filterTable-input-2" data-type="search">
+            </form>
+            <table data-role="table" id="movie-table-2" data-filter="true" data-input="#filterTable-input-2" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
+                <thead>
+                    <tr class="ui-bar-d">
+                        <th>Title</th>
+                        <th>Team</th>
+                        <th>Datum</th>
+                        <th>Angemeldet</th>
+                        <th>Teilnehmer</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="trainingsList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div data-role="page" id="ownTrainings">
+        <div data-role="header">
+            <h1>Eigenes Training</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+            <form>
+                <input id="filterTable-input-4" data-type="search">
+            </form>
+            <table data-role="table" id="movie-table-4" data-filter="true" data-input="#filterTable-input-4" class="ui-responsive ui-table ui-table-reflow ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle">
+                <thead>
+                    <tr class="ui-bar-d">
+                        <th>Title</th>
+                        <th>Team</th>
+                        <th>Datum</th>
+                        <th>Angemeldet</th>
+                        <th>Teilnehmer</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="trainingsList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div data-role="page" id="own-teams-trainings">
+        <div data-role="header">
+            <h1>TeamManager</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+            <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                <thead>
+                    <tr class="ui-bar-d">
+                        <th>Title</th>
+                        <th>Team</th>
+                        <th>Datum</th>
+                        <th>Angemeldet</th>
+                        <th>Teilnehmer</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="teamTrainingsList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div data-role="page" id="training-edit">
+        <div data-role="header">
+            <h1 id="trainingEditHeader">Neues Training erstellen</h1>
+            <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
+        </div>
+        <div role="main" class="ui-content">
+            <label for="number-training-id">Training ID:</label>
+            <input type="number" name="team-id" pattern="[0-9]*" id="number-training-id" disabled>
+            <label for="cmbx-training-teamid">Team:</label>
+            <select name="cmbx-training-teamid" id="cmbx-training-teamid">
+            </select>
+
+            <label for="txt-training-title">Titel:</label>
+            <input type="text" name="team-name" id="txt-training-title">
+
+            <label for="txt-training-date">Datum:</label>
+            <input type="text" name="team-website" id="txt-training-date">
+
+            <fieldset data-role="controlgroup">
+                <legend>Training teilnehmen:</legend>
+                <input type="checkbox" name="chck-training-entry" id="chck-team-member">
+                <label for="chck-team-member">Beitreten</label>
+            </fieldset>
+            <a onclick="saveTraining()" data-role="button" data-icon="check" data-theme="b">Speichern</a>
+            <a onclick="deleteTraining()" data-role="button" data-icon="delete" data-theme="b" id="btn-training-delete">Löschen</a>
+            <a href="#trainings" data-role="button" data-icon="arrow-l" data-theme="b">Zurück</a>
+        </div>
+    </div>
 </body>
+
 </html>
