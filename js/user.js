@@ -153,10 +153,14 @@ function signup() {
     });
 }
 
-function logout() {
+function logout(auto) {
     username,
     password,
     userId = '';
     localStorage.clear();
-    window.location.hash = '#login';
+    if (auto) {
+        $.mobile.changePage('#login?logout=auto');
+    } else {
+        $.mobile.changePage('#login');
+    }
 }

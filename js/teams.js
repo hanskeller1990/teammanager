@@ -148,3 +148,13 @@ function memberIdOfUser(members) {
     });
     return memberId;
 }
+
+function ownTeams(teams) {
+    let ownTeams = [];
+    teams.forEach(function(teams) {
+        if (team.OwnerId == userId) {
+            ownTeams.push(team);
+        }
+    });
+    return ownTeams;
+}

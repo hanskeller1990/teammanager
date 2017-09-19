@@ -88,6 +88,16 @@ function call(path, postData, successFn, method) {
         beforeSend: function(xhr) {
             xhr.setRequestHeader('Authorization', 'Basic ' + btoa(username + ':' + password));
         },
-        success: successFn
+        statusCode: {
+            200: function(data) {
+                if (shouldBe401(data)) {
+                    if (window.location.hash !== '#login&ui-state=dialog') {
+                        logout(true);
+                    }
+                } else {
+                    successFn(data);
+                }
+            }
+        }
     });
 }

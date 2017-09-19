@@ -7,8 +7,10 @@ $(document).on('pagebeforeshow', '#own-teams-trainings', function() {
 });
 
 $(document).on('pagebeforeshow', '#training-edit', function(e, data) {
-    if ($.mobile.pageData && $.mobile.pageData.id) {
+    if ($.mobile.pageData) {
         getTrainingDetail($.mobile.pageData.id);
+    } else {
+        getTrainingDetail();
     }
 });
 
@@ -84,21 +86,25 @@ function getTraining(trainingId, successFn) {
 }
 
 function showTrainingDetail(training, teamId) {
-    get('teams/' + teamId, function(data) {
-        if (data[0]) {
-            $('#number-team-id').val(team.TeamId);
-            $('#txt-team-owner').val(data[0].FirstName + ' ' + data[0].LastName);
-            $('#txt-team-name').val(team.Name);
-            $('#txt-team-website').val(team.Website);
-            if (team.Members && memberIdOfUser(team.Members) > 0) {
-                $('#chck-team-member').attr('checked', true).checkboxradio('refresh');
+    if (teamId) {
+        get('teams/' + teamId, function(data) {
+            if (data[0]) {
+                $('#number-training-id').val(training.TrainingId);
+                $('#cmbx-training-teamid').append('<option value="' + data[0].TeamId + '">' + data[0].Name + '</option>');
+                $('#txt-training-title').val(training.Title);
+                $('#txt-training-date').val(training.Date);
+                // if (team.Participants && memberIdOfUser(team.Members) > 0) {
+                //     $('#chck-training-participant').attr('checked', true).checkboxradio('refresh');
+                // }
             }
-        }
-    });
-    if (team.TeamId) {
-        $('#btn-team-delete').show();
+        });
     } else {
-        $('#btn-team-delete').hide();
+
+    }
+    if (training.TrainingId) {
+        $('#btn-training-delete').show();
+    } else {
+        $('#btn-training-delete').hide();
     }
 }
 
