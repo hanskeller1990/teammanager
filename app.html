@@ -159,8 +159,12 @@
             <a href="#settings" data-icon="gear" class="ui-btn-right">Options</a>
         </div>
         <div role="main" class="ui-content">
-            <table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive">
-                <thead>
+
+            <form>
+                <input id="filterTable-input" data-type="search">
+            </form>
+            <table data-role="table" id="movie-table" data-filter="true" data-input="#filterTable-input" class="ui-responsive">
+            <thead>
                     <tr class="ui-bar-d">
                         <th>Name</th>
                         <th>Website</th>
