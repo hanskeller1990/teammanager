@@ -8,7 +8,7 @@ $(document).on('pagebeforeshow', '#own-teams-trainings', function() {
 
 $(document).on('pagebeforeshow', '#training-edit', function(e, data) {
     if ($.mobile.pageData) {
-        getTrainingDetail($.mobile.pageData.id);
+        getTrainingDetail($.mobile.pageData.trainingId);
     } else {
         getTrainingDetail();
     }
@@ -135,7 +135,7 @@ function writeTrainingsEntry(id, training) {
             '<td>' + training.Date + '</td>' +
             '<td><button class="ui-btn ui-shadow ui-corner-all" onclick="abmelden(' + participantId + ')">Abmelden</button></td>' +
             '<td>' + training.Participants.length + '</td>' +
-            '<td><a href="#training-edit?id=' + training.TrainingId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
+            '<td><a href="#training-edit?trainingId=' + training.TrainingId + '" data-role="button" data-icon="edit" data-iconpos="notext" ' +
             'data-theme="c" data-inline="true" class="ui-link ui-btn ui-btn-c ui-icon-edit ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Edit</a></td>' +
             '</tr>';
     } else {
