@@ -61,11 +61,19 @@ function listOwnTeamsTrainings() {
 
 function anmelden(trainingId) {
     postData = '{"UserId": ' + userId + ',"TrainingId": ' + trainingId + '}';
-    post('participants', postData, listTrainings());
+    callback = listTrainings();
+    if (window.location.hash === '#own-teams-trainings') {
+        callback = listOwnTeamsTrainings();
+    }
+    post('participants', postData, callback);
 }
 
 function abmelden(memberid) {
-    del('participants/' + memberid, listTrainings());
+    callback = listTrainings();
+    if (window.location.hash === '#own-teams-trainings') {
+        callback = listOwnTeamsTrainings();
+    }
+    del('participants/' + memberid, callback);
 }
 
 function writeTrainingsEntry(id, training) {
