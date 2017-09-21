@@ -20,6 +20,15 @@ $(document).on('pagebeforeshow', '#trainings', function() {
 $(document).on('pagebeforeshow', '#own-teams-trainings', function() {
     listOwnTeamsTrainings();
 });
+/**
+ * calls {{#crossLink "Training/listOwnTrainings:method"}}{{/crossLink}} if page ownTrainings is loaded
+ * @event pagebeforeshow
+ * @param ownTrainings
+ */
+$(document).on('pagebeforeshow', '#ownTrainings', function() {
+    listOwnTrainings();
+});
+
 
 /**
  * calls {{#crossLink "Training/getTrainingDetail:method"}}{{/crossLink}} with parameter passed to page if page training-edit is loaded
@@ -68,7 +77,7 @@ function listTrainings() {
 }
 
 /**
- * get all ownTrainings
+ * get all Trainings from own Teams
  * @method listOwnTeamsTrainings
  */
 function listOwnTeamsTrainings() {
@@ -92,6 +101,34 @@ function listOwnTeamsTrainings() {
                     memberId = memberIdOfUser(teams[training.TeamId].Members);
                     if (memberId > 0) {
                         writeTrainingsEntry('teamTrainingsList', training);
+                    }
+                }
+            });
+        }
+    });
+}
+
+/**
+ * get all Trainings the users participating
+ * @method listOwnTrainings
+ */
+function listOwnTrainings() {
+    $('tbody#ownTrainingsList').empty();
+    teams = [];
+    get('trainings', function(data) {
+        console.debug(data);
+        if (noError(data)) {
+            data.forEach(function(training) {
+                if (participantIdOfUser(training.Participants) > 0) {
+                    if (!teams[training.TeamId]) {
+                        get('teams/' + training.TeamId, function(data) {
+                            if (noError(data)) {
+                                teams[training.TeamId] = data[0];
+                                writeTrainingsEntry('ownTrainingsList', training);
+                            }
+                        });
+                    } else {
+                        writeTrainingsEntry('ownTrainingsList', training);
                     }
                 }
             });
