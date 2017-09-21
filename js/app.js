@@ -116,8 +116,10 @@ function call(path, postData, successFn, method) {
         statusCode: {
             200: function(data) {
                 if (shouldBe401(data)) {
-                    if (window.location.hash !== '#login&ui-state=dialog') {
+                    if (window.location.hash !== '#login' && window.location.hash !== '#login&ui-state=dialog') {
                         logout(true);
+                    } else {
+                        successFn(data);
                     }
                 } else {
                     successFn(data);

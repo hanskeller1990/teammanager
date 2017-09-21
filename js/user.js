@@ -46,6 +46,17 @@ $(document).bind('pagebeforechange', function() {
 $(document).on('pagebeforeshow', '#settings', function() {
     showUser();
 });
+$(document).on('pagebeforeshow', '#login', function(e, data) {
+    if ($.mobile.pageData) {
+        if ($.mobile.pageData.logout === 'true') {
+            $('#logoutText').text('Sie wurden automatisch ausgeloggt. Bitte prüfen Sie Usernamen und Passwort und loggen Sie sich neu ein.');
+        } else {
+            $('#logoutText').text('Sie haben sich erfolgreich ausgeloggt.');
+        }
+    } else {
+        $('#logoutText').text('');
+    }
+});
 
 /**
  * gets User data and puts it info the page
@@ -77,12 +88,11 @@ function change() {
         return;
     }
 
-    putData = '{' +
-        '"LastName": "' + lastname + '",' +
-        '"FirstName": "' + firstname + '",' +
-        '"Email": "' + mail + '"' +
-        '}';
-    put('users/' + userId, putData, function(data) {
+    var putData = {};
+    putData.FirstName = firstname;
+    putData.LastName = lastname;
+    putData.Email = mail;
+    put('users/' + userId, JSON.stringify(putData), function(data) {
         if (noError(data)) {
             popup('settings-popup', 'Erfolg', 'Daten erfolgreich geändert', 2000);
             localName = localStorage.getItem('username')
@@ -111,10 +121,10 @@ function changePW() {
         popup('settings-popup', 'Fehler', 'Die Beiden Passwörter stimmen nicht überein', 2000);
         return;
     }
-    putData = '{' +
-        '"Password": "' + password + '"' +
-        '}';
-    put('users/' + userId, putData, function(data) {
+
+    putData = {};
+    putData.Password = password;
+    put('users/' + userId, JSON.stringify(putData), function(data) {
         if (noError(data)) {
             popup('settings-popup', 'Erfolg', 'Passwort erfolgreich geändert', 2000);
             localPW = localStorage.getItem('password')
@@ -187,13 +197,13 @@ function signup() {
         popup('signup-popup', 'Fehler', 'Die Beiden Passwörter stimmen nicht überein', 2000);
         return;
     }
-    postData = '{' +
-        '"LastName": "' + lastname + '",' +
-        '"FirstName": "' + firstname + '",' +
-        '"Email": "' + mail + '",' +
-        '"Password": "' + password + '"' +
-        '}';
-    post('register', postData, function(data) {
+
+    var postData = {};
+    postData.FirstName = firstname;
+    postData.LastName = lastname;
+    postData.Email = mail;
+    postData.Password = password;
+    post('register', JSON.stringify(postData), function(data) {
         if (noError(data)) {
             popup('signup-popup', data.type, data.message, 2000);
             $.mobile.changePage('#login');
@@ -203,14 +213,15 @@ function signup() {
     });
 }
 
+/**
+ * logout user clears all user specific data including localStorage
+ * @method logout
+ * @param auto {boolean} true for logout by app and not user
+ */
 function logout(auto) {
     username,
     password,
     userId = '';
     localStorage.clear();
-    if (auto) {
-        $.mobile.changePage('#login?logout=auto');
-    } else {
-        $.mobile.changePage('#login');
-    }
+    $.mobile.changePage('#login?logout=' + auto);
 }
