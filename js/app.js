@@ -1,52 +1,30 @@
 /**
- * Created by hk on 22.08.2017.
+ * Contains generall functions
+ * @class App
  */
-// $(document).ready(function() {
-//     receiveMembers();
-// });
 
-function receiveMembers() {
-    get('users', function(data) {
-        console.log(data);
-        data.forEach(function(user) {
-            var content = '<li onclick="memberDetail(' + user.UserId + ')">' + user.FirstName + ' ' + user.LastName + '</li>';
-            $('ul#memberlist').append(content);
-        }, this);
-    });
-}
+/**
+ * basePath for all api calls
+ * @property basePath
+ * @type string
+ * @default https://zbw.lump.ch/api/v1
+ */
+var basePath = 'https://zbw.lump.ch/api/v1';
 
-function memberDetail(id) {
-    // storeObject.id = id;
-    //Change page
-    $.mobile.changePage('#members-detail?id=' + id);
-}
-$(document).on('pagebeforeshow', '#members-detail', function(e, data) {
-    if ($.mobile.pageData && $.mobile.pageData.id) {
-        getMemberDetail($.mobile.pageData.id);
-    }
-});
 
-function getMemberDetail() {
-    get('users', function(data) {
-        console.log(data);
-        data.forEach(function(user) {
-            var content = '<li onclick="memberDetail(' + user.UserId + ')">' + user.FirstName + ' ' + user.LastName + '</li>';
-            $('ul#memberlist').append(content);
-        }, this);
-    });
-}
-
-$(document).bind('pagebeforechange', function(event, data) {
-    $.mobile.pageData = (data && data.options && data.options.pageData) ?
-        data.options.pageData :
-        null;
-});
-
+/**
+ * sets the navbar (on the home page) to the navbar of the whole site
+ * @event document load
+ */
 $(function() {    
     $("[data-role='navbar']").navbar();    
     $("[data-role='header'], [data-role='footer']").toolbar();
 });
-// Update the contents of the toolbars
+
+/**
+ * ensures that the current page is higlighted in the navbar
+ * @event pagecontainerchange
+ */
 $(document).on('pagecontainerchange', function(event, data) { 
     var current = window.location.hash;
     $("[data-role='navbar'] a.ui-btn-active").removeClass("ui-btn-active");
@@ -57,25 +35,72 @@ $(document).on('pagecontainerchange', function(event, data) { 
     });
 });
 
-var basePath = 'https://zbw.lump.ch/api/v1';
+/**
+ * function to pass data between pages
+ * @event pagebeforechange
+ */
+$(document).bind('pagebeforechange', function(event, data) {
+    $.mobile.pageData = (data && data.options && data.options.pageData) ?
+        data.options.pageData :
+        null;
+});
 
-
+/**
+ * GET method for the api
+ * @method get
+ * @param path {string} location extending basePath
+ * @param successFn {function} callback function
+ */
 function get(path, successFn) {
     call(path, null, successFn, 'GET');
 }
 
+/**
+ * POST method for the api
+ * @method post
+ * @param path {string} location extending basePath
+ * @param data data for the request (JSON)
+ * @param successFn {function} callback function
+ */
 function post(path, data, successFn) {
     call(path, data, successFn, 'POST');
 }
 
+/**
+ * PUT method for the api
+ * @method put
+ * @param path {string} location extending basePath
+ * @param data data for the request (JSON)
+ * @param successFn {function} callback function
+ */
 function put(path, data, successFn) {
     call(path, data, successFn, 'PUT');
 }
 
+/**
+ * DELETE method for the api
+ * @method del
+ * @param path {string} location extending basePath
+ * @param successFn {function} callback function
+ */
 function del(path, successFn) {
     call(path, null, successFn, 'DELETE');
 }
 
+/**
+ * calls the api with provided data and passes return data to callback function
+ * 
+ * function doesn't use standard success of jQuery ajax, but statusCode (200) 
+ * to check whether the data returned should actually be an error (especially a 401)
+ * by the method {{#crossLink "error/shouldBe401:method"}}{{/crossLink}}
+ * otherwise the user is automatically logged out and redirected to the login page
+ * @method call
+ * @private
+ * @param path {string} location extending basePath
+ * @param postData data for post and put requests
+ * @param successFn {function} callback function
+ * @param method {string} HTTP Method
+ */
 function call(path, postData, successFn, method) {
     if (path.indexOf('/') != 0) {
         path = '/' + path
@@ -91,8 +116,10 @@ function call(path, postData, successFn, method) {
         statusCode: {
             200: function(data) {
                 if (shouldBe401(data)) {
-                    if (window.location.hash !== '#login&ui-state=dialog') {
+                    if (window.location.hash !== '#login' && window.location.hash !== '#login&ui-state=dialog') {
                         logout(true);
+                    } else {
+                        successFn(data);
                     }
                 } else {
                     successFn(data);

@@ -1,11 +1,31 @@
+/**
+ * Contains trainings specific functions
+ * @class Training
+ */
+
+/**
+ * calls {{#crossLink "Training/listTrainings:method"}}{{/crossLink}} if page trainings is loaded
+ * @event pagebeforeshow
+ * @param trainings
+ */
 $(document).on('pagebeforeshow', '#trainings', function() {
     listTrainings();
 });
 
+/**
+ * calls {{#crossLink "Training/listOwnTeamsTrainings:method"}}{{/crossLink}} if page own-teams-trainings is loaded
+ * @event pagebeforeshow
+ * @param own-teams-trainings
+ */
 $(document).on('pagebeforeshow', '#own-teams-trainings', function() {
     listOwnTeamsTrainings();
 });
 
+/**
+ * calls {{#crossLink "Training/getTrainingDetail:method"}}{{/crossLink}} with parameter passed to page if page training-edit is loaded
+ * @event pagebeforeshow
+ * @param training-edit
+ */
 $(document).on('pagebeforeshow', '#training-edit', function(e, data) {
     if ($.mobile.pageData) {
         getTrainingDetail($.mobile.pageData.trainingId);
@@ -14,13 +34,18 @@ $(document).on('pagebeforeshow', '#training-edit', function(e, data) {
     }
 });
 
+/**
+ * teams for caching teams
+ * @property teams
+ * @type Array
+ */
 var teams;
 
 function listTrainings() {
     $('tbody#trainingsList').empty();
     teams = [];
     get('trainings', function(data) {
-        debug(data);
+        console.debug(data);
         if (noError(data)) {
             data.forEach(function(training) {
                 if (!teams[training.TeamId]) {
@@ -42,7 +67,7 @@ function listOwnTeamsTrainings() {
     $('tbody#teamTrainingsList').empty();
     teams = [];
     get('trainings', function(data) {
-        debug(data);
+        console.debug(data);
         if (noError(data)) {
             data.forEach(function(training) {
                 if (!teams[training.TeamId]) {
@@ -80,7 +105,7 @@ function getTrainingDetail(trainingId) {
 
 function getTraining(trainingId, successFn) {
     get('trainings/' + trainingId, function(data) {
-        debug(data[0]);
+        console.debug(data[0]);
         if (data[0]) {
             successFn(data[0]);
         }
@@ -135,7 +160,7 @@ function saveTraining() {
         });
     } else {
         put('trainings/' + training.TrainingId, JSON.stringify(team), function(data) {
-            debug(data);
+            console.debug(data);
         });
     }
 }

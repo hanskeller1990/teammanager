@@ -1,6 +1,32 @@
+/**
+ * Contains user specific functions
+ * @class User
+ */
+
+/**
+ * username for all api calls
+ * @property username
+ * @type string
+ */
+/**
+ * password for all api calls
+ * @property password
+ * @type string
+ */
+/**
+ * userId of the logged in user
+ * @property userId
+ * @type number
+ */
 var username, password, userId;
 
-$(document).bind('pagebeforechange', function(event, data) {
+/**
+ * checks if the username, password and userId is set
+ * if not checks also in localStorage
+ * if still not, redirects to login page
+ * @event pagebeforechange
+ */
+$(document).bind('pagebeforechange', function() {
     if (window.location.hash !== '#login' && window.location.hash !== '#signup') {
         if (!username || !password || !userId) {
             username = localStorage.getItem('username');
@@ -13,15 +39,33 @@ $(document).bind('pagebeforechange', function(event, data) {
     }
 });
 
-
+/**
+ * calls {{#crossLink "User/showUser:method"}}{{/crossLink}} if page settings is loaded
+ * @event pagebeforeshow
+ * @param settings
+ */
 $(document).on('pagebeforeshow', '#settings', function() {
     showUser();
 });
+$(document).on('pagebeforeshow', '#login', function(e, data) {
+    if ($.mobile.pageData) {
+        if ($.mobile.pageData.logout === 'true') {
+            $('#logoutText').text('Sie wurden automatisch ausgeloggt. Bitte prüfen Sie Usernamen und Passwort und loggen Sie sich neu ein.');
+        } else {
+            $('#logoutText').text('Sie haben sich erfolgreich ausgeloggt.');
+        }
+    } else {
+        $('#logoutText').text('');
+    }
+});
 
-
+/**
+ * gets User data and puts it info the page
+ * @method showUser
+ */
 function showUser() {
     get('users/' + userId, function(data) {
-        debug(data[0]);
+        console.debug(data[0]);
         if (data[0]) {
             user = data[0];
             $('#txt-settings-firstname').val(user.FirstName);
@@ -31,6 +75,10 @@ function showUser() {
     });
 }
 
+/**
+ * gets User data from page and makes a put request to change user data
+ * @method change
+ */
 function change() {
     firstname = $('#txt-settings-firstname').val();
     lastname = $('#txt-settings-lastname').val();
@@ -41,12 +89,11 @@ function change() {
         return;
     }
 
-    putData = '{' +
-        '"LastName": "' + lastname + '",' +
-        '"FirstName": "' + firstname + '",' +
-        '"Email": "' + mail + '"' +
-        '}';
-    put('users/' + userId, putData, function(data) {
+    var putData = {};
+    putData.FirstName = firstname;
+    putData.LastName = lastname;
+    putData.Email = mail;
+    put('users/' + userId, JSON.stringify(putData), function(data) {
         if (noError(data)) {
             popup('settings-popup', 'Erfolg', 'Daten erfolgreich geändert', 2000);
             localName = localStorage.getItem('username')
@@ -59,6 +106,10 @@ function change() {
     });
 }
 
+/**
+ * gets User password from page and makes a put request to change the password
+ * @method changePW
+ */
 function changePW() {
     password = $('#txt-settings-password').val();
     passwordConfirm = $('#txt-settings-password-confirm').val();
@@ -71,10 +122,10 @@ function changePW() {
         popup('settings-popup', 'Fehler', 'Die Beiden Passwörter stimmen nicht überein', 2000);
         return;
     }
-    putData = '{' +
-        '"Password": "' + password + '"' +
-        '}';
-    put('users/' + userId, putData, function(data) {
+
+    putData = {};
+    putData.Password = password;
+    put('users/' + userId, JSON.stringify(putData), function(data) {
         if (noError(data)) {
             popup('settings-popup', 'Erfolg', 'Passwort erfolgreich geändert', 2000);
             localPW = localStorage.getItem('password')
@@ -87,7 +138,13 @@ function changePW() {
     });
 }
 
-
+/**
+ * gets username and password from page and makes a call to get all users
+ * to check if the provided data is valid and to
+ * iterate over them to get the userId of the logged in user
+ * if checkbox is checked, data passed is saved to localStorage for future sessions
+ * @method login
+ */
 function login() {
     username = $('#txt-login-username').val();
     password = $('#txt-login-password').val();
@@ -98,7 +155,7 @@ function login() {
     }
     // get('users?Email=' + username + ')', function(data) {
     get('users', function(data) {
-        debug(data);
+        console.debug(data);
         if (!noError(data)) {
             popup('login-popup', data.type, data.message, 2000);
             return;
@@ -118,6 +175,10 @@ function login() {
     });
 }
 
+/**
+ * gets data from form and tries to register a new user with it
+ * @method signup
+ */
 function signup() {
     firstname = $('#txt-signup-firstname').val();
     lastname = $('#txt-signup-lastname').val();
@@ -137,13 +198,13 @@ function signup() {
         popup('signup-popup', 'Fehler', 'Die Beiden Passwörter stimmen nicht überein', 2000);
         return;
     }
-    postData = '{' +
-        '"LastName": "' + lastname + '",' +
-        '"FirstName": "' + firstname + '",' +
-        '"Email": "' + mail + '",' +
-        '"Password": "' + password + '"' +
-        '}';
-    post('register', postData, function(data) {
+
+    var postData = {};
+    postData.FirstName = firstname;
+    postData.LastName = lastname;
+    postData.Email = mail;
+    postData.Password = password;
+    post('register', JSON.stringify(postData), function(data) {
         if (noError(data)) {
             popup('signup-popup', data.type, data.message, 2000);
             $.mobile.changePage('#login');
@@ -153,14 +214,15 @@ function signup() {
     });
 }
 
+/**
+ * logout user clears all user specific data including localStorage
+ * @method logout
+ * @param auto {boolean} true for logout by app and not user
+ */
 function logout(auto) {
     username,
     password,
     userId = '';
     localStorage.clear();
-    if (auto) {
-        $.mobile.changePage('#login?logout=auto');
-    } else {
-        $.mobile.changePage('#login');
-    }
+    $.mobile.changePage('#login?logout=' + auto);
 }

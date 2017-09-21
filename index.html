@@ -12,13 +12,12 @@
     <link rel="stylesheet" href="./styles.css">
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    <script src="js/jqm.page.params.js"></script>
+    <script src="js/assets/jqm.page.params.js"></script>
     <script src="js/app.js"></script>
     <script src="js/user.js"></script>
     <script src="js/teams.js"></script>
     <script src="js/trainings.js"></script>
     <script src="js/popup.js"></script>
-    <script src="js/log.js"></script>
     <script src="js/error.js"></script>
 </head>
 
@@ -45,7 +44,7 @@
             <h2 class="appHeader">Administration</h2>
             <ul data-role="listview" data-inset="true" data-divider-theme="d">
                 <li><a href="#settings" class="appItem">Benutzereinstellungen</a></li>
-                <li><a onclick="logout()" class="appItem">Abmelden</a></li>
+                <li><a onclick="logout(false)" class="appItem">Abmelden</a></li>
             </ul>
         </div>
         <div data-role="footer" data-position="fixed" style="overflow:hidden;">
@@ -65,6 +64,7 @@
         </div>
         <div role="main" class="ui-content">
             <h3>Sign In</h3>
+            <p id="logoutText"></p>
             <label for="txt-login-username">Benutzername (E-Mail)</label>
             <input type="text" name="txt-username" id="txt-login-username">
             <label for="txt-login-password">Passwort</label>

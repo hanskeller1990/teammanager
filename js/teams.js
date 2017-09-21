@@ -9,7 +9,7 @@ $(document).on('pagebeforeshow', '#ownTeams', function() {
 function listTeams(id, own) {
     $('tbody#' + id).empty();
     get('teams', function(data) {
-        debug(data);
+        console.debug(data);
         data.forEach(function(team) {
             memberId = memberIdOfUser(team.Members);
             if (!own || (own && memberId > 0)) {
@@ -87,7 +87,7 @@ function showTeamDetail(team, ownerId) {
 
 function getTeam(teamid, successFn) {
     get('teams/' + teamid, function(data) {
-        debug(data[0]);
+        console.debug(data[0]);
         if (data[0]) {
             successFn(data[0]);
         }
@@ -99,7 +99,7 @@ function listMembers(members) {
     $('tbody#teamMembers').empty();
     members.forEach(function(member) {
         get('users/' + member.UserId, function(data) {
-            debug(data[0]);
+            console.debug(data[0]);
             if (data[0]) {
                 user = data[0];
                 var content =
@@ -129,7 +129,7 @@ function saveTeam() {
         });
     } else {
         put('teams/' + team.TeamId, JSON.stringify(team), function(data) {
-            debug(data);
+            console.debug(data);
         });
     }
 }

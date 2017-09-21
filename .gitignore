@@ -6,6 +6,9 @@
 *.exe
 *.o
 *.so
+node_modules
+out
+dist
 
 # Packages #
 ############
