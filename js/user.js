@@ -1,6 +1,31 @@
+/**
+ * Contains user specific functions
+ * @class User
+ */
+
+/**
+ * username for all api calls
+ * @property username
+ */
+/**
+ * password for all api calls
+ * @property password
+ * @type string
+ */
+/**
+ * userId of the logged in user
+ * @property userId
+ * @type number
+ */
 var username, password, userId;
 
-$(document).bind('pagebeforechange', function(event, data) {
+/**
+ * checks if the username, password and userId is set
+ * if not checks also in localStorage
+ * if still not, redirects to login page
+ * @event pagebeforechange
+ */
+$(document).bind('pagebeforechange', function() {
     if (window.location.hash !== '#login' && window.location.hash !== '#signup') {
         if (!username || !password || !userId) {
             username = localStorage.getItem('username');
@@ -13,12 +38,19 @@ $(document).bind('pagebeforechange', function(event, data) {
     }
 });
 
-
+/**
+ * calls {{#crossLink "User/showUser:method"}}{{/crossLink}} if page settings is loaded
+ * @event pagebeforeshow
+ * @param settings
+ */
 $(document).on('pagebeforeshow', '#settings', function() {
     showUser();
 });
 
-
+/**
+ * gets User data and puts it info the page
+ * @method showUser
+ */
 function showUser() {
     get('users/' + userId, function(data) {
         console.debug(data[0]);
@@ -31,6 +63,10 @@ function showUser() {
     });
 }
 
+/**
+ * gets User data from page and makes a put request to change user data
+ * @method change
+ */
 function change() {
     firstname = $('#txt-settings-firstname').val();
     lastname = $('#txt-settings-lastname').val();
@@ -59,6 +95,10 @@ function change() {
     });
 }
 
+/**
+ * gets User password from page and makes a put request to change the password
+ * @method changePW
+ */
 function changePW() {
     password = $('#txt-settings-password').val();
     passwordConfirm = $('#txt-settings-password-confirm').val();
@@ -87,7 +127,13 @@ function changePW() {
     });
 }
 
-
+/**
+ * gets username and password from page and makes a call to get all users
+ * to check if the provided data is valid and to
+ * iterate over them to get the userId of the logged in user
+ * if checkbox is checked, data passed is saved to localStorage for future sessions
+ * @method login
+ */
 function login() {
     username = $('#txt-login-username').val();
     password = $('#txt-login-password').val();
@@ -118,6 +164,10 @@ function login() {
     });
 }
 
+/**
+ * gets data from form and tries to register a new user with it
+ * @method signup
+ */
 function signup() {
     firstname = $('#txt-signup-firstname').val();
     lastname = $('#txt-signup-lastname').val();
