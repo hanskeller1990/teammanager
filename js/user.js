@@ -6,6 +6,7 @@
 /**
  * username for all api calls
  * @property username
+ * @type string
  */
 /**
  * password for all api calls

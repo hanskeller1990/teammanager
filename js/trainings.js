@@ -1,11 +1,31 @@
+/**
+ * Contains trainings specific functions
+ * @class Training
+ */
+
+/**
+ * calls {{#crossLink "Training/listTrainings:method"}}{{/crossLink}} if page trainings is loaded
+ * @event pagebeforeshow
+ * @param trainings
+ */
 $(document).on('pagebeforeshow', '#trainings', function() {
     listTrainings();
 });
 
+/**
+ * calls {{#crossLink "Training/listOwnTeamsTrainings:method"}}{{/crossLink}} if page own-teams-trainings is loaded
+ * @event pagebeforeshow
+ * @param own-teams-trainings
+ */
 $(document).on('pagebeforeshow', '#own-teams-trainings', function() {
     listOwnTeamsTrainings();
 });
 
+/**
+ * calls {{#crossLink "Training/getTrainingDetail:method"}}{{/crossLink}} with parameter passed to page if page training-edit is loaded
+ * @event pagebeforeshow
+ * @param training-edit
+ */
 $(document).on('pagebeforeshow', '#training-edit', function(e, data) {
     if ($.mobile.pageData) {
         getTrainingDetail($.mobile.pageData.trainingId);
@@ -14,6 +34,11 @@ $(document).on('pagebeforeshow', '#training-edit', function(e, data) {
     }
 });
 
+/**
+ * teams for caching teams
+ * @property teams
+ * @type Array
+ */
 var teams;
 
 function listTrainings() {
