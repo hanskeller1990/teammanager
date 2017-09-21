@@ -1,4 +1,3 @@
-
 /**
  * calls {{#crossLink "Teams/listTeams:method"}}{{/crossLink}} if page teams is loaded
  * @event team list load
@@ -56,7 +55,7 @@ function listTeams(id, own) {
  */
 function beitritt(teamid) {
     postData = '{"UserId": ' + userId + ',"TeamId": ' + teamid + '}';
-    post('members', postData, listTeams());
+    post('members', postData, function(data) { listTeams('teamList') });
 }
 
 
@@ -66,7 +65,7 @@ function beitritt(teamid) {
  * @param teamid {string} team id from the selected team
  */
 function austritt(memberid) {
-    del('members/' + memberid, listTeams());
+    del('members/' + memberid, function(data) { listTeams('teamList') });
 }
 
 /**

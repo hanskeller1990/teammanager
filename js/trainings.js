@@ -35,7 +35,7 @@ $(document).on('pagebeforeshow', '#training-edit', function(e, data) {
 });
 
 /**
- * teams for caching teams
+ * for caching teams
  * @property teams
  * @type Array
  */
@@ -195,9 +195,9 @@ function saveTraining() {
  */
 function anmelden(trainingId) {
     postData = '{"UserId": ' + userId + ',"TrainingId": ' + trainingId + '}';
-    callback = listTrainings();
+    callback = function(data) { listTrainings() };
     if (window.location.hash === '#own-teams-trainings') {
-        callback = listOwnTeamsTrainings();
+        callback = function(data) { listOwnTeamsTrainings() };
     }
     post('participants', postData, callback);
 }
@@ -208,9 +208,9 @@ function anmelden(trainingId) {
  * @param trainingId {string} training id from the selected training
  */
 function abmelden(memberid) {
-    callback = listTrainings();
+    callback = function(data) { listTrainings() };
     if (window.location.hash === '#own-teams-trainings') {
-        callback = listOwnTeamsTrainings();
+        callback = function(data) { listOwnTeamsTrainings() };
     }
     del('participants/' + memberid, callback);
 }
