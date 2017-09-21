@@ -41,6 +41,10 @@ $(document).on('pagebeforeshow', '#training-edit', function(e, data) {
  */
 var teams;
 
+/**
+ * get all trainings
+ * @method listTrainings
+ */
 function listTrainings() {
     $('tbody#trainingsList').empty();
     teams = [];
@@ -63,6 +67,10 @@ function listTrainings() {
     });
 }
 
+/**
+ * get all ownTrainings
+ * @method listOwnTeamsTrainings
+ */
 function listOwnTeamsTrainings() {
     $('tbody#teamTrainingsList').empty();
     teams = [];
@@ -91,6 +99,10 @@ function listOwnTeamsTrainings() {
     });
 }
 
+/**
+ * get all trainingsDetails and set the page header to new training or edit training
+ * @method getTrainingDetail
+ */
 function getTrainingDetail(trainingId) {
     if (trainingId) {
         $("#trainingEditHeader").text("Training bearbeiten");
@@ -103,6 +115,12 @@ function getTrainingDetail(trainingId) {
     }
 }
 
+/**
+ * get all trainingsDetails and set the page header to new training or edit training
+ * @method getTraining
+ * @param trainingId {string} id from the selected training
+ * @param successFn {function} callback function
+ */
 function getTraining(trainingId, successFn) {
     get('trainings/' + trainingId, function(data) {
         console.debug(data[0]);
@@ -112,6 +130,13 @@ function getTraining(trainingId, successFn) {
     });
 }
 
+/**
+ * fills all page field with the trainings object information
+ * if the team id null will hide the delete button on the page
+ * @method showTrainingDetail
+ * @param training {object} training object with all information
+ * @param teamId {string} team id from the selected training
+ */
 function showTrainingDetail(training, teamId) {
     if (teamId) {
         get('teams/' + teamId, function(data) {
@@ -123,9 +148,6 @@ function showTrainingDetail(training, teamId) {
                 $('#cmbx-training-teamid').attr('disabled', true);
                 $('#txt-training-title').val(training.Title);
                 $('#txt-training-date').val(training.Date);
-                // if (team.Participants && memberIdOfUser(team.Members) > 0) {
-                //     $('#chck-training-participant').attr('checked', true).checkboxradio('refresh');
-                // }
             }
         });
     } else {
@@ -136,9 +158,6 @@ function showTrainingDetail(training, teamId) {
             });
             $('#txt-training-title').val(training.Title);
             $('#txt-training-date').val(training.Date);
-            // if (team.Participants && memberIdOfUser(team.Members) > 0) {
-            //     $('#chck-training-participant').attr('checked', true).checkboxradio('refresh');
-            // }
         });
     }
     if (training.TrainingId) {
@@ -148,6 +167,11 @@ function showTrainingDetail(training, teamId) {
     }
 }
 
+/**
+ * get value from page fields and put or post all training information to the server api as JSON to save this values
+ * PUT for modified training and POST for a new training
+ * @method saveTraining
+ */
 function saveTraining() {
     let training = {};
     training.TrainingId = $('#number-training-id').val();
@@ -164,7 +188,11 @@ function saveTraining() {
         });
     }
 }
-
+/**
+ * register the selected training for the actual user
+ * @method anmelden
+ * @param trainingId {string} training id from the selected training
+ */
 function anmelden(trainingId) {
     postData = '{"UserId": ' + userId + ',"TrainingId": ' + trainingId + '}';
     callback = listTrainings();
@@ -174,6 +202,11 @@ function anmelden(trainingId) {
     post('participants', postData, callback);
 }
 
+/**
+ * cancel the selected training for the actual user
+ * @method abmelden
+ * @param trainingId {string} training id from the selected training
+ */
 function abmelden(memberid) {
     callback = listTrainings();
     if (window.location.hash === '#own-teams-trainings') {
@@ -182,6 +215,12 @@ function abmelden(memberid) {
     del('participants/' + memberid, callback);
 }
 
+/**
+ * add trainings item to the page table with all trainings information
+ * @method writeTrainingsEntry
+ * @param id {string} page table id
+ * @param training {object} training object with all information
+ */
 function writeTrainingsEntry(id, training) {
     participantId = participantIdOfUser(training.Participants);
     if (participantId > 0) {
@@ -211,6 +250,12 @@ function writeTrainingsEntry(id, training) {
     $('tbody#' + id).append(content);
 }
 
+/**
+ * check if the actual user in the this participant list if yes returns the participants id if not returns 0
+ * @method participantIdOfUser
+ * @param training {Array} Array of participants objects
+ * @return participantId {String} participant if from the actual user
+ */
 function participantIdOfUser(participants) {
     let participantId = 0;
     participants.forEach(function(participant) {

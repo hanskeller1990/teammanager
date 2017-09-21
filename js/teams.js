@@ -1,6 +1,6 @@
 
 /**
- * call the method listTeam to fill the table with all teams
+ * calls {{#crossLink "Teams/listTeams:method"}}{{/crossLink}} if page teams is loaded
  * @event team list load
  */
 $(document).on('pagebeforeshow', '#teams', function() {
@@ -8,7 +8,7 @@ $(document).on('pagebeforeshow', '#teams', function() {
 });
 
 /**
- * call the method listTeam to fill the table with only own teams
+ * calls {{#crossLink "Teams/listTeams:method"}}{{/crossLink}} if page oenTeams is loaded
  * @event own team list load
  */
 $(document).on('pagebeforeshow', '#ownTeams', function() {
@@ -19,7 +19,7 @@ $(document).on('pagebeforeshow', '#ownTeams', function() {
  * get all teams and put his on the page table, If need to shown only the own teams needs the parameter
  * own of true otherwise of false
  * @method listTeams
- * @param id {string} own user id
+ * @param id {string} page table id
  * @param own {boolean} shows only the own Teams
  */
 function listTeams(id, own) {
@@ -224,7 +224,7 @@ function memberIdOfUser(members) {
  * Check all own teams from the aczual user and return this as list
  * @method ownTeams
  * @param teams {Array} Array of team objects
- * @return ownTeam {Array} Array from team objects
+ * @return ownTeams {Array} Array from team objects
  */
 function ownTeams(teams) {
     let ownTeams = [];
