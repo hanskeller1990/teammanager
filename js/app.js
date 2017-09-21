@@ -48,8 +48,8 @@ $(document).bind('pagebeforechange', function(event, data) {
 /**
  * GET method for the api
  * @method get
- * @param path location extending basePath
- * @param successFn callback function
+ * @param path {string} location extending basePath
+ * @param successFn {function} callback function
  */
 function get(path, successFn) {
     call(path, null, successFn, 'GET');
@@ -58,9 +58,9 @@ function get(path, successFn) {
 /**
  * POST method for the api
  * @method post
- * @param path location extending basePath
+ * @param path {string} location extending basePath
  * @param data data for the request (JSON)
- * @param successFn callback function
+ * @param successFn {function} callback function
  */
 function post(path, data, successFn) {
     call(path, data, successFn, 'POST');
@@ -69,9 +69,9 @@ function post(path, data, successFn) {
 /**
  * PUT method for the api
  * @method put
- * @param path location extending basePath
+ * @param path {string} location extending basePath
  * @param data data for the request (JSON)
- * @param successFn callback function
+ * @param successFn {function} callback function
  */
 function put(path, data, successFn) {
     call(path, data, successFn, 'PUT');
@@ -80,8 +80,8 @@ function put(path, data, successFn) {
 /**
  * DELETE method for the api
  * @method del
- * @param path location extending basePath
- * @param successFn callback function
+ * @param path {string} location extending basePath
+ * @param successFn {function} callback function
  */
 function del(path, successFn) {
     call(path, null, successFn, 'DELETE');
@@ -91,10 +91,10 @@ function del(path, successFn) {
  * calls the api with provided data and passes return data to callback function
  * @method call
  * @private
- * @param path location extending basePath
+ * @param path {string} location extending basePath
  * @param postData data for post and put requests
- * @param successFn callback function
- * @param method HTTP Method
+ * @param successFn {function} callback function
+ * @param method {string} HTTP Method
  */
 function call(path, postData, successFn, method) {
     if (path.indexOf('/') != 0) {

@@ -1,14 +1,14 @@
 /**
- * @class popup
+ * @class Popup
  */
 
 /**
  * Method for showing messages inside a popup div
  * @method popup
- * @param {*id of the popup div} id 
- * @param {* title to be shown as header} title 
- * @param {* text to be shown} text 
- * @param {* timeout before auto closing} timeout 
+ * @param id {string} id of the popup div
+ * @param title {string} title to be shown as header
+ * @param text {string} text to be shown
+ * @param  timeout {number} ms before auto closing
  */
 
 function popup(id, title, text, timeout) {
