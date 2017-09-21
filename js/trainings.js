@@ -20,7 +20,7 @@ function listTrainings() {
     $('tbody#trainingsList').empty();
     teams = [];
     get('trainings', function(data) {
-        debug(data);
+        console.debug(data);
         if (noError(data)) {
             data.forEach(function(training) {
                 if (!teams[training.TeamId]) {
@@ -42,7 +42,7 @@ function listOwnTeamsTrainings() {
     $('tbody#teamTrainingsList').empty();
     teams = [];
     get('trainings', function(data) {
-        debug(data);
+        console.debug(data);
         if (noError(data)) {
             data.forEach(function(training) {
                 if (!teams[training.TeamId]) {
@@ -80,7 +80,7 @@ function getTrainingDetail(trainingId) {
 
 function getTraining(trainingId, successFn) {
     get('trainings/' + trainingId, function(data) {
-        debug(data[0]);
+        console.debug(data[0]);
         if (data[0]) {
             successFn(data[0]);
         }
@@ -135,7 +135,7 @@ function saveTraining() {
         });
     } else {
         put('trainings/' + training.TrainingId, JSON.stringify(team), function(data) {
-            debug(data);
+            console.debug(data);
         });
     }
 }

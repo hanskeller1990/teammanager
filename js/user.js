@@ -21,7 +21,7 @@ $(document).on('pagebeforeshow', '#settings', function() {
 
 function showUser() {
     get('users/' + userId, function(data) {
-        debug(data[0]);
+        console.debug(data[0]);
         if (data[0]) {
             user = data[0];
             $('#txt-settings-firstname').val(user.FirstName);
@@ -98,7 +98,7 @@ function login() {
     }
     // get('users?Email=' + username + ')', function(data) {
     get('users', function(data) {
-        debug(data);
+        console.debug(data);
         if (!noError(data)) {
             popup('login-popup', data.type, data.message, 2000);
             return;
