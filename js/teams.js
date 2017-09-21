@@ -1,11 +1,27 @@
+
+/**
+ * call the method listTeam to fill the table with all teams
+ * @event team list load
+ */
 $(document).on('pagebeforeshow', '#teams', function() {
     listTeams('teamList');
 });
 
+/**
+ * call the method listTeam to fill the table with only own teams
+ * @event own team list load
+ */
 $(document).on('pagebeforeshow', '#ownTeams', function() {
     listTeams('ownTeamList', true);
 });
 
+/**
+ * get all teams and put his on the page table, If need to shown only the own teams needs the parameter
+ * own of true otherwise of false
+ * @method listTeams
+ * @param id {string} own user id
+ * @param own {boolean} shows only the own Teams
+ */
 function listTeams(id, own) {
     $('tbody#' + id).empty();
     get('teams', function(data) {
@@ -33,16 +49,32 @@ function listTeams(id, own) {
         }, this);
     });
 }
-
+/**
+ * sets the selected team status to joined
+ * @method beitritt
+ * @param teamid {string} team id from the selected team
+ */
 function beitritt(teamid) {
     postData = '{"UserId": ' + userId + ',"TeamId": ' + teamid + '}';
     post('members', postData, listTeams());
 }
 
+
+/**
+ * sets the selected team status to deny
+ * @method austritt
+ * @param teamid {string} team id from the selected team
+ */
 function austritt(memberid) {
     del('members/' + memberid, listTeams());
 }
 
+/**
+ * check pageData is null
+ * null = get empty team details
+ * not null = get team detail from team id
+ * @event pagebeforeshow
+ */
 $(document).on('pagebeforeshow', '#team-edit', function(e, data) {
     if ($.mobile.pageData) {
         getTeamDetail($.mobile.pageData.teamId);
@@ -51,6 +83,12 @@ $(document).on('pagebeforeshow', '#team-edit', function(e, data) {
     }
 });
 
+/**
+ * Get team details from teamid (null = new team)
+ * Change header for new team or edit tem
+ * @method getTeamDetails
+ * @param teamid {string} team id from which we need the detail data
+ */
 function getTeamDetail(teamid) {
     if (teamid) {
         $("#teamEditHeader").text("Team bearbeiten");
@@ -63,6 +101,13 @@ function getTeamDetail(teamid) {
     }
 }
 
+/**
+ * fills all page fields with the information from the team object
+ * also fills all team members to the page table if the TeamId not null, otherwise will hide this page table
+ * @method showTeamDetails
+ * @param ownerid {string} user id from the team owner
+ * @param team {object} all information from the team
+ */
 function showTeamDetail(team, ownerId) {
     get('users/' + ownerId, function(data) {
         if (data[0]) {
@@ -85,6 +130,12 @@ function showTeamDetail(team, ownerId) {
     }
 }
 
+/**
+ * get method for team details
+ * @method getTeam
+ * @param teamid {string} team id from which we need the detail data
+ * @param successFN {function} callback function
+ */
 function getTeam(teamid, successFn) {
     get('teams/' + teamid, function(data) {
         console.debug(data[0]);
@@ -94,7 +145,11 @@ function getTeam(teamid, successFn) {
     });
 }
 
-
+/**
+ * get method to make the team member list on the page (Firstname and Lastname)
+ * @method listMembers
+ * @param members {Object Array} Array from object member
+ */
 function listMembers(members) {
     $('tbody#teamMembers').empty();
     members.forEach(function(member) {
@@ -113,7 +168,11 @@ function listMembers(members) {
     });
 };
 
-
+/**
+ * get value from page fields and put or post all team information to the server api as JSON to save this values
+ * PUT for modified team and POST for a new Team
+ * @method saveTeam
+ */
 function saveTeam() {
     let team = {};
     team.TeamId = $('#number-team-id').val();
@@ -134,6 +193,10 @@ function saveTeam() {
     }
 }
 
+/**
+ * Delete the selected team and call the del method to send this to the server api
+ * @method deleteTeam
+ */
 function deleteTeam() {
     teamId = $('#number-team-id').val();
     del('teams/' + teamId, function(data) {
@@ -141,7 +204,12 @@ function deleteTeam() {
     });
 }
 
-
+/**
+ * Check if the actual user in the member list and return 0 oder the memberid
+ * @method memberIdOfUser
+ * @param members {Array} Array of member objects
+ * @return memberid {string} the own member id from the team if the user not member return 0
+ */
 function memberIdOfUser(members) {
     let memberId = 0;
     members.forEach(function(member) {
@@ -152,6 +220,12 @@ function memberIdOfUser(members) {
     return memberId;
 }
 
+/**
+ * Check all own teams from the aczual user and return this as list
+ * @method ownTeams
+ * @param teams {Array} Array of team objects
+ * @return ownTeam {Array} Array from team objects
+ */
 function ownTeams(teams) {
     let ownTeams = [];
     teams.forEach(function(team) {
