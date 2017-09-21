@@ -44,7 +44,7 @@
             <h2 class="appHeader">Administration</h2>
             <ul data-role="listview" data-inset="true" data-divider-theme="d">
                 <li><a href="#settings" class="appItem">Benutzereinstellungen</a></li>
-                <li><a onclick="logout()" class="appItem">Abmelden</a></li>
+                <li><a onclick="logout(false)" class="appItem">Abmelden</a></li>
             </ul>
         </div>
         <div data-role="footer" data-position="fixed" style="overflow:hidden;">
@@ -64,6 +64,7 @@
         </div>
         <div role="main" class="ui-content">
             <h3>Sign In</h3>
+            <p id="logoutText"></p>
             <label for="txt-login-username">Benutzername (E-Mail)</label>
             <input type="text" name="txt-username" id="txt-login-username">
             <label for="txt-login-password">Passwort</label>
