@@ -89,6 +89,11 @@ function del(path, successFn) {
 
 /**
  * calls the api with provided data and passes return data to callback function
+ * 
+ * function doesn't use standard success of jQuery ajax, but statusCode (200) 
+ * to check whether the data returned should actually be an error (especially a 401)
+ * by the method {{#crossLink "error/shouldBe401:method"}}{{/crossLink}}
+ * otherwise the user is automatically logged out and redirected to the login page
  * @method call
  * @private
  * @param path {string} location extending basePath
